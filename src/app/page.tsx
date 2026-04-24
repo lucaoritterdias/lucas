@@ -250,6 +250,7 @@ export default function Home() {
     contatos: true,
     configuracoes: true,
   });
+  const [isExplorerOpen, setIsExplorerOpen] = useState(false);
 
   const activeSection =
     sections.find((section) => section.id === activeId) ?? sections[0];
@@ -267,6 +268,7 @@ export default function Home() {
       ...current,
       [section.groupId]: true,
     }));
+    setIsExplorerOpen(false);
   };
 
   return (
@@ -276,6 +278,13 @@ export default function Home() {
 
       <section className="editor-shell">
         <header className="window-chrome">
+          <button
+            type="button"
+            className="mobile-explorer-toggle"
+            onClick={() => setIsExplorerOpen(true)}
+          >
+            Explorer
+          </button>
           <div className="window-menu" aria-hidden="true" />
           <div className="project-search" aria-label="Projeto atual">
             <span className="project-search-icon">⌕</span>
@@ -289,6 +298,13 @@ export default function Home() {
         </header>
 
         <div className="editor-frame">
+          <button
+            type="button"
+            className={`mobile-drawer-backdrop ${isExplorerOpen ? "is-open" : ""}`}
+            onClick={() => setIsExplorerOpen(false)}
+            aria-label="Fechar explorer"
+          />
+
           <aside className="activity-bar" aria-label="Atividades">
             {activityItems.map((item, index) => (
               <button
@@ -314,10 +330,19 @@ export default function Home() {
             ))}
           </aside>
 
-          <aside className="explorer-panel">
+          <aside className={`explorer-panel ${isExplorerOpen ? "is-open" : ""}`}>
             <div className="panel-header">
               <span>Explorer</span>
-              <span className="panel-dots">...</span>
+              <div className="panel-header-actions">
+                <span className="panel-dots">...</span>
+                <button
+                  type="button"
+                  className="mobile-close-explorer"
+                  onClick={() => setIsExplorerOpen(false)}
+                >
+                  Fechar
+                </button>
+              </div>
             </div>
 
             <div className="panel-section">
@@ -476,6 +501,30 @@ export default function Home() {
             </div>
           </section>
         </div>
+
+        <nav className="mobile-bottom-bar" aria-label="Navegacao mobile">
+          <button
+            type="button"
+            className={`mobile-bottom-button ${isExplorerOpen ? "is-active" : ""}`}
+            onClick={() => setIsExplorerOpen(true)}
+          >
+            Arquivos
+          </button>
+          <button
+            type="button"
+            className="mobile-bottom-button"
+            onClick={() => setActiveId(sections[0].id)}
+          >
+            Sobre
+          </button>
+          <button
+            type="button"
+            className="mobile-bottom-button"
+            onClick={() => setActiveId(sections[1].id)}
+          >
+            Contato
+          </button>
+        </nav>
       </section>
     </main>
   );
