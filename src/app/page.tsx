@@ -19,7 +19,13 @@ type Section = {
   fileName: string;
   label: string;
   accent: string;
+  groupId: string;
   lines: SnippetLine[];
+};
+
+type SectionGroup = {
+  id: string;
+  label: string;
 };
 
 type ActivityItem = {
@@ -34,6 +40,7 @@ const sections: Section[] = [
     fileName: "sobre-mim.ts",
     label: "sobre mim",
     accent: "#56b6c2",
+    groupId: "apresentacao",
     lines: [
       { type: "comment", text: "// apresentacao principal" },
       { type: "entry", keyName: "nome", value: '"Lucas Ritter Dias"' },
@@ -80,6 +87,7 @@ const sections: Section[] = [
     fileName: "contato.ts",
     label: "contato",
     accent: "#e5c07b",
+    groupId: "contatos",
     lines: [
       { type: "comment", text: "// formas de falar comigo" },
       {
@@ -114,6 +122,11 @@ const sections: Section[] = [
       },
     ],
   },
+];
+
+const sectionGroups: SectionGroup[] = [
+  { id: "apresentacao", label: "apresentacao" },
+  { id: "contatos", label: "contatos" },
 ];
 
 const activityItems: ActivityItem[] = [
@@ -157,9 +170,28 @@ const activityItems: ActivityItem[] = [
 
 export default function Home() {
   const [activeId, setActiveId] = useState(sections[0].id);
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
+    apresentacao: true,
+    contatos: true,
+  });
 
   const activeSection =
     sections.find((section) => section.id === activeId) ?? sections[0];
+
+  const toggleGroup = (groupId: string) => {
+    setOpenGroups((current) => ({
+      ...current,
+      [groupId]: !current[groupId],
+    }));
+  };
+
+  const handleOpenSection = (section: Section) => {
+    setActiveId(section.id);
+    setOpenGroups((current) => ({
+      ...current,
+      [section.groupId]: true,
+    }));
+  };
 
   return (
     <main className="editor-page">
@@ -217,19 +249,39 @@ export default function Home() {
               <div className="tree-group">
                 <div className="tree-folder">
                   <p className="tree-title">src</p>
-                  {sections.map((section) => (
-                    <button
-                      key={section.id}
-                      type="button"
-                      className={`tree-file ${activeId === section.id ? "is-active" : ""}`}
-                      onClick={() => setActiveId(section.id)}
-                    >
-                      <span
-                        className="file-dot"
-                        style={{ backgroundColor: section.accent }}
-                      />
-                      <span>{section.fileName}</span>
-                    </button>
+                  {sectionGroups.map((group) => (
+                    <div key={group.id} className="tree-accordion">
+                      <button
+                        type="button"
+                        className={`tree-folder-toggle ${openGroups[group.id] ? "is-open" : ""}`}
+                        onClick={() => toggleGroup(group.id)}
+                        aria-expanded={openGroups[group.id]}
+                      >
+                        <span className="tree-chevron">›</span>
+                        <span className="tree-folder-name">{group.label}</span>
+                      </button>
+
+                      {openGroups[group.id] ? (
+                        <div className="tree-files">
+                          {sections
+                            .filter((section) => section.groupId === group.id)
+                            .map((section) => (
+                              <button
+                                key={section.id}
+                                type="button"
+                                className={`tree-file ${activeId === section.id ? "is-active" : ""}`}
+                                onClick={() => handleOpenSection(section)}
+                              >
+                                <span
+                                  className="file-dot"
+                                  style={{ backgroundColor: section.accent }}
+                                />
+                                <span>{section.fileName}</span>
+                              </button>
+                            ))}
+                        </div>
+                      ) : null}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -245,7 +297,7 @@ export default function Home() {
                   role="tab"
                   aria-selected={activeId === section.id}
                   className={`editor-tab ${activeId === section.id ? "is-active" : ""}`}
-                  onClick={() => setActiveId(section.id)}
+                  onClick={() => handleOpenSection(section)}
                 >
                   <span
                     className="file-dot"

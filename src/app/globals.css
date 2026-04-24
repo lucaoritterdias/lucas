@@ -4,22 +4,22 @@
   --bg-dark: #050308;
   --bg-purple: #2d0f46;
   --bg-purple-soft: #4a1f70;
-  --window: #1b1727;
-  --window-2: #221d31;
-  --window-3: #181421;
-  --sidebar: #171320;
-  --sidebar-2: #1d1828;
-  --line: rgba(255, 255, 255, 0.07);
-  --line-strong: rgba(255, 255, 255, 0.12);
-  --text: #ece8ff;
-  --muted: #9f96c2;
-  --muted-2: #6f678f;
-  --comment: #7d759d;
+  --window: #2a2f36;
+  --window-2: #30363d;
+  --window-3: #252a31;
+  --sidebar: #23282f;
+  --sidebar-2: #2b3139;
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.14);
+  --text: #eef3f8;
+  --muted: #aeb7c2;
+  --muted-2: #7e8896;
+  --comment: #7f8a97;
   --key: #d9a86c;
-  --string: #82d8ff;
-  --accent: #c58cff;
-  --success: #8ad487;
-  --shadow: rgba(0, 0, 0, 0.45);
+  --string: #8fc7ff;
+  --accent: #c1a4ff;
+  --success: #94d8a3;
+  --shadow: rgba(0, 0, 0, 0.38);
   --font-ui:
     "IBM Plex Sans", "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
   --font-code:
@@ -45,9 +45,10 @@ body {
   min-height: 100vh;
   margin: 0;
   background:
-    radial-gradient(circle at 20% 20%, rgba(114, 49, 180, 0.45), transparent 26%),
-    radial-gradient(circle at 80% 18%, rgba(102, 35, 171, 0.28), transparent 24%),
-    linear-gradient(135deg, #060308 0%, #120815 38%, #251037 68%, #050308 100%);
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.98), transparent 16%),
+    radial-gradient(circle at 82% 14%, rgba(224, 230, 236, 0.92), transparent 18%),
+    radial-gradient(circle at 50% 100%, rgba(207, 215, 224, 0.55), transparent 24%),
+    linear-gradient(145deg, #fcfdfe 0%, #eef2f6 35%, #dbe2e9 100%);
   color: var(--text);
   font-family: var(--font-ui);
 }
@@ -100,7 +101,7 @@ a {
   left: -6%;
   width: 26rem;
   height: 26rem;
-  background: rgba(137, 65, 230, 0.32);
+  background: rgba(255, 255, 255, 0.92);
 }
 
 .aurora-right {
@@ -108,7 +109,7 @@ a {
   bottom: 8%;
   width: 24rem;
   height: 24rem;
-  background: rgba(65, 18, 107, 0.35);
+  background: rgba(210, 218, 227, 0.78);
 }
 
 .editor-shell {
@@ -117,12 +118,12 @@ a {
   width: min(1120px, 92vw);
   min-height: min(720px, calc(100vh - 120px));
   margin: 0 auto;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   overflow: hidden;
-  background: rgba(20, 16, 29, 0.94);
+  background: rgba(40, 45, 53, 0.95);
   box-shadow:
-    0 24px 80px var(--shadow),
-    0 1px 0 rgba(255, 255, 255, 0.05) inset;
+    0 32px 100px rgba(70, 78, 88, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset;
 }
 
 .window-chrome {
@@ -133,7 +134,7 @@ a {
   min-height: 42px;
   padding: 0 14px;
   border-bottom: 1px solid var(--line);
-  background: #191621;
+  background: #2b3138;
 }
 
 .window-menu {
@@ -147,8 +148,8 @@ a {
   gap: 10px;
   min-height: 28px;
   padding: 0 12px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  background: #221d2f;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #363c44;
   color: var(--muted);
   font-size: 0.84rem;
 }
@@ -167,8 +168,8 @@ a {
 .window-action {
   width: 10px;
   height: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
-  opacity: 0.72;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  opacity: 0.78;
 }
 
 .editor-frame {
@@ -184,7 +185,7 @@ a {
   gap: 8px;
   padding: 10px 8px;
   border-right: 1px solid var(--line);
-  background: #17131f;
+  background: #20252c;
 }
 
 .activity-button {
@@ -201,7 +202,7 @@ a {
 }
 
 .activity-button.is-active {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.07);
   color: var(--text);
   opacity: 1;
 }
@@ -233,7 +234,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #cfc5f7;
+  color: #dfe6ee;
   font-size: 0.77rem;
 }
 
@@ -258,10 +259,58 @@ a {
   gap: 4px;
 }
 
+.tree-accordion {
+  display: grid;
+  gap: 4px;
+}
+
 .tree-title {
   margin: 8px 0 4px;
-  color: #b8acd8;
+  color: #c4ccd6;
   font-size: 0.7rem;
+}
+
+.tree-folder-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 0.42rem 0.4rem;
+  border: 0;
+  background: transparent;
+  color: #cfd7df;
+  text-align: left;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.67rem;
+}
+
+.tree-folder-toggle:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tree-chevron {
+  display: inline-flex;
+  width: 10px;
+  justify-content: center;
+  color: var(--muted);
+  transform: rotate(0deg);
+  transition: transform 180ms ease;
+}
+
+.tree-folder-toggle.is-open .tree-chevron {
+  transform: rotate(90deg);
+}
+
+.tree-folder-name {
+  min-width: 0;
+}
+
+.tree-files {
+  display: grid;
+  gap: 4px;
+  padding-left: 18px;
 }
 
 .tree-file {
@@ -272,15 +321,15 @@ a {
   padding: 0.58rem 0.68rem;
   border: 1px solid transparent;
   background: transparent;
-  color: #d8d2f4;
+  color: #dce3ea;
   text-align: left;
   cursor: pointer;
 }
 
 .tree-file:hover,
 .tree-file.is-active {
-  border-color: rgba(255, 255, 255, 0.04);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .file-dot {
@@ -305,7 +354,7 @@ a {
   gap: 1px;
   overflow-x: auto;
   border-bottom: 1px solid var(--line);
-  background: #18141f;
+  background: #262b33;
 }
 
 .editor-tab {
@@ -316,14 +365,14 @@ a {
   padding: 0 16px;
   border: 0;
   border-right: 1px solid rgba(255, 255, 255, 0.04);
-  background: #1d1827;
+  background: #2a3037;
   color: var(--muted);
   cursor: pointer;
   white-space: nowrap;
 }
 
 .editor-tab.is-active {
-  background: #221d31;
+  background: #343a42;
   color: var(--text);
 }
 
@@ -331,7 +380,7 @@ a {
   display: grid;
   align-content: start;
   gap: 22px;
-  padding: 26px;
+  padding: 28px;
 }
 
 .editor-meta {
@@ -357,7 +406,7 @@ a {
 .code-pane {
   border: 1px solid var(--line);
   overflow: hidden;
-  background: rgba(32, 27, 46, 0.82);
+  background: rgba(44, 50, 59, 0.92);
 }
 
 .code-toolbar {
@@ -367,7 +416,7 @@ a {
   min-height: 42px;
   padding: 0 14px;
   border-bottom: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.03);
   color: var(--muted);
   font-size: 0.78rem;
   font-family: var(--font-code);
@@ -387,7 +436,7 @@ a {
 }
 
 .code-line:hover {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .line-number {
@@ -423,7 +472,7 @@ a {
 }
 
 .token-plain {
-  color: #ddd7fb;
+  color: #e3e9f0;
 }
 
 .token-link {
@@ -438,10 +487,12 @@ a {
 
 @media (max-width: 960px) {
   .editor-page {
-    padding: 16px;
+    padding: 18px;
+    align-items: stretch;
   }
 
   .editor-shell {
+    width: min(100%, 820px);
     min-height: auto;
   }
 
@@ -450,8 +501,12 @@ a {
   }
 
   .activity-bar {
+    overflow-x: auto;
     flex-direction: row;
     justify-content: flex-start;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 12px;
     border-right: 0;
     border-bottom: 1px solid var(--line);
   }
@@ -459,31 +514,141 @@ a {
   .explorer-panel {
     border-right: 0;
     border-bottom: 1px solid var(--line);
+    padding: 12px 14px;
+  }
+
+  .panel-section {
+    gap: 8px;
+  }
+
+  .tree-group {
+    gap: 6px;
+  }
+
+  .editor-workspace {
+    padding: 22px;
   }
 }
 
 @media (max-width: 640px) {
   .editor-page {
-    padding: 10px;
+    padding: 12px;
+    align-items: stretch;
   }
 
   .window-chrome {
     grid-template-columns: 1fr;
-    gap: 10px;
-    padding-block: 10px;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+
+  .project-search {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .window-actions,
+  .window-menu {
+    display: none;
+  }
+
+  .editor-shell {
+    width: 100%;
+    min-height: calc(100vh - 24px);
+  }
+
+  .activity-bar {
+    justify-content: flex-start;
+    gap: 4px;
+    padding: 8px 10px;
+    scrollbar-width: none;
+  }
+
+  .activity-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .activity-button {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+  }
+
+  .explorer-panel {
+    padding: 10px 12px;
+  }
+
+  .panel-header {
+    font-size: 0.72rem;
+  }
+
+  .panel-label,
+  .tree-title {
+    font-size: 0.64rem;
+  }
+
+  .tree-folder-toggle {
+    padding: 0.4rem 0.3rem;
+    font-size: 0.62rem;
+  }
+
+  .tree-files {
+    padding-left: 14px;
+  }
+
+  .tree-file {
+    padding: 0.56rem 0.6rem;
+    font-size: 0.92rem;
+  }
+
+  .editor-tabs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    overflow: hidden;
+  }
+
+  .editor-tab {
+    min-width: 0;
+    min-height: 40px;
+    justify-content: center;
+    padding: 0 10px;
+    font-size: 0.84rem;
+  }
+
+  .editor-tab span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .editor-workspace {
-    padding: 16px;
-  }
-
-  .editor-meta {
-    flex-direction: column;
+    gap: 18px;
+    padding: 14px;
   }
 
   .code-line {
-    grid-template-columns: 40px minmax(0, 1fr);
-    gap: 12px;
-    padding-inline: 0.75rem;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 10px;
+    padding: 0.18rem 0.7rem;
+  }
+
+  .code-content {
+    font-size: 0.9rem;
+  }
+
+  .code-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: auto;
+    padding: 10px 12px;
+    font-size: 0.72rem;
+  }
+
+  .line-number {
+    font-size: 0.72rem;
+  }
+
+  .editor-meta h1 {
+    font-size: 1.45rem;
   }
 }
