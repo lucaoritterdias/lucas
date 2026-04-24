@@ -115,6 +115,8 @@ a {
 .editor-shell {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
   width: min(1120px, 92vw);
   min-height: min(720px, calc(100vh - 120px));
   margin: 0 auto;
@@ -174,8 +176,10 @@ a {
 
 .editor-frame {
   display: grid;
+  flex: 1 1 auto;
   grid-template-columns: 60px 280px minmax(0, 1fr);
-  min-height: calc(100% - 50px);
+  min-height: 0;
+  background: var(--window-3);
 }
 
 .activity-bar {
@@ -343,6 +347,8 @@ a {
 .editor-main {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 100%;
   min-width: 0;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent 18%),
@@ -377,10 +383,12 @@ a {
 }
 
 .editor-workspace {
-  display: grid;
-  align-content: start;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
   gap: 22px;
   padding: 28px;
+  min-height: 0;
 }
 
 .editor-meta {
@@ -404,9 +412,13 @@ a {
 }
 
 .code-pane {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
   border: 1px solid var(--line);
   overflow: hidden;
   background: rgba(44, 50, 59, 0.92);
+  min-height: 320px;
 }
 
 .code-toolbar {
@@ -423,6 +435,7 @@ a {
 }
 
 .code-content {
+  flex: 1 1 auto;
   padding: 12px 0;
   font-family: var(--font-code);
   font-size: 0.96rem;
@@ -554,7 +567,7 @@ a {
 
   .editor-shell {
     width: 100%;
-    min-height: calc(100vh - 24px);
+    min-height: auto;
   }
 
   .activity-bar {
@@ -650,5 +663,20 @@ a {
 
   .editor-meta h1 {
     font-size: 1.45rem;
+  }
+}
+
+@media (max-height: 820px) {
+  .editor-page {
+    align-items: flex-start;
+    padding-block: 20px;
+  }
+
+  .editor-shell {
+    min-height: auto;
+  }
+
+  .code-pane {
+    min-height: 260px;
   }
 }

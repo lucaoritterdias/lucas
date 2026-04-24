@@ -84,8 +84,8 @@ const sections: Section[] = [
   },
   {
     id: "contato",
-    fileName: "contato.ts",
-    label: "contato",
+    fileName: "lucas.ts",
+    label: "Lucas Ritter Dias",
     accent: "#e5c07b",
     groupId: "contatos",
     lines: [
@@ -122,11 +122,86 @@ const sections: Section[] = [
       },
     ],
   },
+  {
+    id: "polvor",
+    fileName: "polvor.ts",
+    label: "Polvor Tecnologia e Software",
+    accent: "#ff9e64",
+    groupId: "contatos",
+    lines: [
+      { type: "comment", text: "// contatos da polvor" },
+      {
+        type: "entry",
+        keyName: "site",
+        value: '"www.polvor.com"',
+        href: "https://www.polvor.com",
+      },
+      {
+        type: "entry",
+        keyName: "email",
+        value: '"oi@polvor.com"',
+        href: "mailto:oi@polvor.com",
+      },
+      {
+        type: "entry",
+        keyName: "instagram",
+        value: '"https://www.instagram.com/polvortecnologia/"',
+        href: "https://www.instagram.com/polvortecnologia/",
+      },
+      {
+        type: "entry",
+        keyName: "linkedin",
+        value: '"https://www.linkedin.com/company/polvor-tecnologia-e-software/"',
+        href: "https://www.linkedin.com/company/polvor-tecnologia-e-software/",
+      },
+      {
+        type: "entry",
+        keyName: "whatsapp",
+        value: '"(51) 9 9813-5730"',
+        href: "tel:+5551998135730",
+      },
+    ],
+  },
+  {
+    id: "settings",
+    fileName: "settings.json",
+    label: "settings",
+    accent: "#61afef",
+    groupId: "configuracoes",
+    lines: [
+      { type: "comment", text: "// configuracoes do meu vscode" },
+      {
+        type: "entry",
+        keyName: "terminal.integrated.enableMultiLinePasteWarning",
+        value: '"never"',
+      },
+      { type: "entry", keyName: "editor.fontSize", value: "13", tone: "muted" },
+      { type: "entry", keyName: "workbench.startupEditor", value: '"none"' },
+      {
+        type: "entry",
+        keyName: "workbench.activityBar.compact",
+        value: "true",
+        tone: "muted",
+      },
+      {
+        type: "entry",
+        keyName: "workbench.iconTheme",
+        value: '"material-icon-theme"',
+      },
+      {
+        type: "entry",
+        keyName: "workbench.colorTheme",
+        value: '"GitHub Dark"',
+        tone: "accent",
+      },
+    ],
+  },
 ];
 
 const sectionGroups: SectionGroup[] = [
   { id: "apresentacao", label: "apresentacao" },
   { id: "contatos", label: "contatos" },
+  { id: "configuracoes", label: "configuracoes" },
 ];
 
 const activityItems: ActivityItem[] = [
@@ -173,6 +248,7 @@ export default function Home() {
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     apresentacao: true,
     contatos: true,
+    configuracoes: true,
   });
 
   const activeSection =
