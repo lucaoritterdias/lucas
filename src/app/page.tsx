@@ -1,531 +1,303 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-type SnippetLine =
-  | { type: "comment"; text: string }
-  | { type: "blank" }
-  | {
-      type: "entry";
-      keyName: string;
-      value: string;
-      tone?: "string" | "accent" | "muted";
-      href?: string;
-    }
-  | { type: "array"; keyName: string; values: string[] };
+type SectionId = "about" | "contact" | "polvor";
 
-type Section = {
-  id: string;
-  fileName: string;
-  label: string;
-  accent: string;
-  groupId: string;
-  lines: SnippetLine[];
-};
-
-type SectionGroup = {
-  id: string;
-  label: string;
-};
-
-type ActivityItem = {
-  id: string;
-  label: string;
-  icon: string;
-};
-
-const sections: Section[] = [
-  {
-    id: "sobre",
-    fileName: "sobre-mim.ts",
-    label: "sobre mim",
-    accent: "#56b6c2",
-    groupId: "apresentacao",
-    lines: [
-      { type: "comment", text: "// apresentacao principal" },
-      { type: "entry", keyName: "nome", value: '"Lucas Ritter Dias"' },
-      { type: "entry", keyName: "idade", value: '"21 anos"' },
-      { type: "entry", keyName: "nacionalidade", value: '"Brasileiro"' },
-      { type: "blank" },
-      { type: "comment", text: "// sobre" },
-      {
-        type: "entry",
-        keyName: "apresentacao",
-        value: '"Ola, me chamo Lucas e sou desenvolvedor de software ha mais de 7 anos."',
-      },
-      {
-        type: "array",
-        keyName: "stack",
-        values: [
-          "PHP",
-          "Javascript",
-          "Node",
-          "Flutter",
-        ],
-      },
-      {
-        type: "entry",
-        keyName: "atuacao",
-        value: '"Desenvolvimento web e mobile com foco em produtos e software sob medida."',
-      },
-      {
-        type: "entry",
-        keyName: "empresa",
-        value: '"Fundador e socio da Polvor (www.polvor.com)."',
-        href: "https://www.polvor.com",
-      },
-      {
-        type: "entry",
-        keyName: "cargo",
-        value: '"Hoje atuo como Diretor de tecnologia."',
-        tone: "accent",
-      },
-    ],
-  },
-  {
-    id: "contato",
-    fileName: "lucas.ts",
-    label: "Lucas Ritter Dias",
-    accent: "#e5c07b",
-    groupId: "contatos",
-    lines: [
-      { type: "comment", text: "// formas de falar comigo" },
-      {
-        type: "entry",
-        keyName: "email",
-        value: '"lucas@polvor.com"',
-        href: "mailto:lucas@polvor.com",
-      },
-      {
-        type: "entry",
-        keyName: "telefone",
-        value: '"(51) 9 9813-5730"',
-        href: "tel:+5551998135730",
-      },
-      {
-        type: "entry",
-        keyName: "github",
-        value: '"lucaoritterdias"',
-      },
-      {
-        type: "entry",
-        keyName: "githubUrl",
-        value: '"https://github.com/lucaoritterdias"',
-        href: "https://github.com/lucaoritterdias",
-      },
-      { type: "entry", keyName: "instagram", value: '"lucas.ritterdias"' },
-      {
-        type: "entry",
-        keyName: "instagramUrl",
-        value: '"https://www.instagram.com/lucas.ritterdias/"',
-        href: "https://www.instagram.com/lucas.ritterdias/",
-      },
-    ],
-  },
-  {
-    id: "polvor",
-    fileName: "polvor.ts",
-    label: "Polvor Tecnologia e Software",
-    accent: "#ff9e64",
-    groupId: "contatos",
-    lines: [
-      { type: "comment", text: "// contatos da polvor" },
-      {
-        type: "entry",
-        keyName: "site",
-        value: '"www.polvor.com"',
-        href: "https://www.polvor.com",
-      },
-      {
-        type: "entry",
-        keyName: "email",
-        value: '"oi@polvor.com"',
-        href: "mailto:oi@polvor.com",
-      },
-      {
-        type: "entry",
-        keyName: "instagram",
-        value: '"https://www.instagram.com/polvortecnologia/"',
-        href: "https://www.instagram.com/polvortecnologia/",
-      },
-      {
-        type: "entry",
-        keyName: "linkedin",
-        value: '"https://www.linkedin.com/company/polvor-tecnologia-e-software/"',
-        href: "https://www.linkedin.com/company/polvor-tecnologia-e-software/",
-      },
-      {
-        type: "entry",
-        keyName: "whatsapp",
-        value: '"(51) 9 9813-5730"',
-        href: "tel:+5551998135730",
-      },
-    ],
-  },
-  {
-    id: "settings",
-    fileName: "settings.json",
-    label: "settings",
-    accent: "#61afef",
-    groupId: "configuracoes",
-    lines: [
-      { type: "comment", text: "// configuracoes do meu vscode" },
-      {
-        type: "entry",
-        keyName: "terminal.integrated.enableMultiLinePasteWarning",
-        value: '"never"',
-      },
-      { type: "entry", keyName: "editor.fontSize", value: "13", tone: "muted" },
-      { type: "entry", keyName: "workbench.startupEditor", value: '"none"' },
-      {
-        type: "entry",
-        keyName: "workbench.activityBar.compact",
-        value: "true",
-        tone: "muted",
-      },
-      {
-        type: "entry",
-        keyName: "workbench.iconTheme",
-        value: '"material-icon-theme"',
-      },
-      {
-        type: "entry",
-        keyName: "workbench.colorTheme",
-        value: '"GitHub Dark"',
-        tone: "accent",
-      },
-    ],
-  },
-];
-
-const sectionGroups: SectionGroup[] = [
-  { id: "apresentacao", label: "apresentacao" },
-  { id: "contatos", label: "contatos" },
-  { id: "configuracoes", label: "configuracoes" },
-];
-
-const activityItems: ActivityItem[] = [
-  {
-    id: "explorer",
-    label: "Explorer",
-    icon:
-      "M4.5 3.75A2.25 2.25 0 0 1 6.75 1.5h4.19c.597 0 1.169.237 1.591.659l3.81 3.81c.422.422.659.994.659 1.591v8.69A2.25 2.25 0 0 1 14.75 18.5H6.75A2.25 2.25 0 0 1 4.5 16.25V3.75Zm7 .5V6a1 1 0 0 0 1 1h1.75",
-  },
-  {
-    id: "search",
-    label: "Search",
-    icon:
-      "M8.25 3.25a5 5 0 1 0 0 10a5 5 0 0 0 0-10Zm0 0l6.25 6.25m-1.5 4.5l3 3",
-  },
-  {
-    id: "source-control",
-    label: "Source Control",
-    icon:
-      "M6 5.25a1.75 1.75 0 1 1-3.5 0a1.75 1.75 0 0 1 3.5 0Zm0 0v7.5m0-7.5L12.5 8m0 0a1.75 1.75 0 1 0 0-3.5A1.75 1.75 0 0 0 12.5 8Zm0 0v3.5m0 0L6 12.75m6.5-1.25a1.75 1.75 0 1 1 0 3.5a1.75 1.75 0 0 1 0-3.5Z",
-  },
-  {
-    id: "extensions",
-    label: "Extensions",
-    icon:
-      "M7.5 2.75 5.25 5l2.25 2.25L5 9.75 2.75 7.5 5 5.25 2.75 3 5 0.75 7.5 3.25 10 0.75 12.25 3 10 5.25l2.25 2.25L10 9.75 7.5 7.25 5.25 9.5",
-  },
-  {
-    id: "monitor",
-    label: "Monitor",
-    icon:
-      "M3 4.25A1.25 1.25 0 0 1 4.25 3h11.5A1.25 1.25 0 0 1 17 4.25v8.5A1.25 1.25 0 0 1 15.75 14H4.25A1.25 1.25 0 0 1 3 12.75v-8.5Zm4.5 12.25h5m-4-2h3",
-  },
-  {
-    id: "flask",
-    label: "Lab",
-    icon:
-      "M7 2.5h4m-3 0v4.25L4.5 14a1.25 1.25 0 0 0 1.12 1.84h6.76A1.25 1.25 0 0 0 13.5 14L10 6.75V2.5",
-  },
+const TABS: { id: SectionId; label: string }[] = [
+  { id: "about", label: "Sobre" },
+  { id: "contact", label: "Contato" },
+  { id: "polvor", label: "Polvor" },
 ];
 
 export default function Home() {
-  const [activeId, setActiveId] = useState(sections[0].id);
-  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
-    apresentacao: true,
-    contatos: true,
-    configuracoes: true,
-  });
-  const [isExplorerOpen, setIsExplorerOpen] = useState(false);
+  const [active, setActive] = useState<SectionId>("about");
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
 
-  const activeSection =
-    sections.find((section) => section.id === activeId) ?? sections[0];
+  useEffect(() => {
+    let rafId: number;
+    const handle = (e: MouseEvent) => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setMouse({
+          x: (e.clientX / window.innerWidth - 0.5) * 26,
+          y: (e.clientY / window.innerHeight - 0.5) * 26,
+        });
+      });
+    };
+    window.addEventListener("mousemove", handle, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handle);
+      cancelAnimationFrame(rafId);
+    };
+  }, []);
 
-  const toggleGroup = (groupId: string) => {
-    setOpenGroups((current) => ({
-      ...current,
-      [groupId]: !current[groupId],
-    }));
-  };
+  return (
+    <main className="page">
+      <div
+        className="bg-orb orb-1"
+        aria-hidden
+        style={{ transform: `translate(${mouse.x}px, ${mouse.y}px)` }}
+      />
+      <div
+        className="bg-orb orb-2"
+        aria-hidden
+        style={{
+          transform: `translate(${-mouse.x * 0.6}px, ${-mouse.y * 0.6}px)`,
+        }}
+      />
+      <div className="bg-dots" aria-hidden />
 
-  const handleOpenSection = (section: Section) => {
-    setActiveId(section.id);
-    setOpenGroups((current) => ({
-      ...current,
-      [section.groupId]: true,
-    }));
-    setIsExplorerOpen(false);
+      <div className="wrapper">
+        <header className="hero">
+          <h1 className="name" data-text="Lucas Ritter Dias">
+            Lucas Ritter Dias
+          </h1>
+          <p className="tagline">
+            Desenvolvedor de Software&nbsp;&middot;&nbsp;CTO&nbsp;&middot;&nbsp;
+            <a
+              href="https://www.polvor.com"
+              target="_blank"
+              rel="noreferrer"
+              className="hero-link"
+            >
+              Polvor
+            </a>
+          </p>
+        </header>
+
+        <nav className="tab-nav" aria-label="Seções">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              className={`tab-btn ${active === tab.id ? "is-active" : ""}`}
+              onClick={() => setActive(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </nav>
+
+        <section className="content-card" aria-live="polite">
+          {active === "about" && <AboutSection key="about" />}
+          {active === "contact" && <ContactSection key="contact" />}
+          {active === "polvor" && <PolvorSection key="polvor" />}
+        </section>
+      </div>
+    </main>
+  );
+}
+
+// ── Shared ─────────────────────────────────────────
+
+function InfoRow({
+  label,
+  delay = 0,
+  children,
+}: {
+  label: string;
+  delay?: number;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="info-row" style={{ animationDelay: `${delay}ms` }}>
+      <span className="info-label">{label}</span>
+      <span className="info-value">{children}</span>
+    </div>
+  );
+}
+
+function InfoLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  const ext = href.startsWith("http");
+  return (
+    <a
+      href={href}
+      className="info-link"
+      target={ext ? "_blank" : undefined}
+      rel={ext ? "noreferrer" : undefined}
+    >
+      {children}
+    </a>
+  );
+}
+
+function CopyRow({
+  label,
+  copyText,
+  href,
+  delay = 0,
+  children,
+}: {
+  label: string;
+  copyText: string;
+  href?: string;
+  delay?: number;
+  children: React.ReactNode;
+}) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(copyText);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      // clipboard unavailable
+    }
   };
 
   return (
-    <main className="editor-page">
-      <div className="editor-aurora aurora-left" />
-      <div className="editor-aurora aurora-right" />
+    <div
+      className="info-row is-copyable"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <span className="info-label">{label}</span>
+      <span className="info-value">
+        {href ? <InfoLink href={href}>{children}</InfoLink> : children}
+      </span>
+      <button
+        type="button"
+        className={`copy-btn ${copied ? "is-copied" : ""}`}
+        onClick={handleCopy}
+        aria-label={`Copiar ${label}`}
+      >
+        {copied ? "✓ copiado" : "copy"}
+      </button>
+    </div>
+  );
+}
 
-      <section className="editor-shell">
-        <header className="window-chrome">
-          <button
-            type="button"
-            className="mobile-explorer-toggle"
-            onClick={() => setIsExplorerOpen(true)}
-          >
-            Explorer
-          </button>
-          <div className="window-menu" aria-hidden="true" />
-          <div className="project-search" aria-label="Projeto atual">
-            <span className="project-search-icon">⌕</span>
-            <span>lucasritterdias.com.br</span>
-          </div>
-          <div className="window-actions" aria-hidden="true">
-            <span className="window-action" />
-            <span className="window-action" />
-            <span className="window-action" />
-          </div>
-        </header>
+function Divider() {
+  return <div className="section-divider" />;
+}
 
-        <div className="editor-frame">
-          <button
-            type="button"
-            className={`mobile-drawer-backdrop ${isExplorerOpen ? "is-open" : ""}`}
-            onClick={() => setIsExplorerOpen(false)}
-            aria-label="Fechar explorer"
-          />
+// ── Sections ───────────────────────────────────────
 
-          <aside className="activity-bar" aria-label="Atividades">
-            {activityItems.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                className={`activity-button ${index === 0 ? "is-active" : ""}`}
-                aria-label={item.label}
-                tabIndex={-1}
-              >
-                <svg
-                  viewBox="0 0 20 20"
-                  aria-hidden="true"
-                  className="activity-icon"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.35"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d={item.icon} />
-                </svg>
-              </button>
-            ))}
-          </aside>
+function AboutSection() {
+  return (
+    <div className="section-content">
+      <InfoRow label="nome" delay={0}>
+        Lucas Ritter Dias
+      </InfoRow>
+      <InfoRow label="idade" delay={50}>
+        21 anos
+      </InfoRow>
+      <InfoRow label="local" delay={100}>
+        Rio Grande do Sul
+      </InfoRow>
+      <Divider />
+      <InfoRow label="sobre" delay={160}>
+        Software Engineer — Construindo...
+      </InfoRow>
+      <InfoRow label="empresa" delay={210}>
+        <InfoLink href="https://www.polvor.com">
+          Polvor Tecnologia e Software
+        </InfoLink>
+      </InfoRow>
+      <InfoRow label="cargo" delay={260}>
+        <span className="info-accent">Diretor de Tecnologia (CTO)</span>
+      </InfoRow>
+    </div>
+  );
+}
 
-          <aside className={`explorer-panel ${isExplorerOpen ? "is-open" : ""}`}>
-            <div className="panel-header">
-              <span>Explorer</span>
-              <div className="panel-header-actions">
-                <span className="panel-dots">...</span>
-                <button
-                  type="button"
-                  className="mobile-close-explorer"
-                  onClick={() => setIsExplorerOpen(false)}
-                >
-                  Fechar
-                </button>
-              </div>
-            </div>
+function ContactSection() {
+  return (
+    <div className="section-content">
+      <CopyRow
+        label="email"
+        copyText="lucas@polvor.com"
+        href="mailto:lucas@polvor.com"
+        delay={0}
+      >
+        lucas@polvor.com
+      </CopyRow>
+      <CopyRow
+        label="gmail"
+        copyText="lucasritterdiasrd@gmail.com"
+        href="mailto:lucasritterdiasrd@gmail.com"
+        delay={55}
+      >
+        lucasritterdiasrd@gmail.com
+      </CopyRow>
+      <CopyRow
+        label="tel"
+        copyText="+5551998135730"
+        href="tel:+5551998135730"
+        delay={110}
+      >
+        (51) 9 9813-5730
+      </CopyRow>
+      <CopyRow
+        label="github"
+        copyText="lucaoritterdias"
+        href="https://github.com/lucaoritterdias"
+        delay={165}
+      >
+        lucaoritterdias
+      </CopyRow>
+      <CopyRow
+        label="instagram"
+        copyText="@lucas.ritterdias"
+        href="https://www.instagram.com/lucas.ritterdias/"
+        delay={220}
+      >
+        lucas.ritterdias
+      </CopyRow>
+    </div>
+  );
+}
 
-            <div className="panel-section">
-              <p className="panel-label">lucasritterdias.com.br</p>
-              <div className="tree-group">
-                <div className="tree-folder">
-                  <p className="tree-title">src</p>
-                  {sectionGroups.map((group) => (
-                    <div key={group.id} className="tree-accordion">
-                      <button
-                        type="button"
-                        className={`tree-folder-toggle ${openGroups[group.id] ? "is-open" : ""}`}
-                        onClick={() => toggleGroup(group.id)}
-                        aria-expanded={openGroups[group.id]}
-                      >
-                        <span className="tree-chevron">›</span>
-                        <span className="tree-folder-name">{group.label}</span>
-                      </button>
-
-                      {openGroups[group.id] ? (
-                        <div className="tree-files">
-                          {sections
-                            .filter((section) => section.groupId === group.id)
-                            .map((section) => (
-                              <button
-                                key={section.id}
-                                type="button"
-                                className={`tree-file ${activeId === section.id ? "is-active" : ""}`}
-                                onClick={() => handleOpenSection(section)}
-                              >
-                                <span
-                                  className="file-dot"
-                                  style={{ backgroundColor: section.accent }}
-                                />
-                                <span>{section.fileName}</span>
-                              </button>
-                            ))}
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </aside>
-
-          <section className="editor-main">
-            <div className="editor-tabs" role="tablist" aria-label="Seções">
-              {sections.map((section) => (
-                <button
-                  key={section.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={activeId === section.id}
-                  className={`editor-tab ${activeId === section.id ? "is-active" : ""}`}
-                  onClick={() => handleOpenSection(section)}
-                >
-                  <span
-                    className="file-dot"
-                    style={{ backgroundColor: section.accent }}
-                  />
-                  <span>{section.fileName}</span>
-                </button>
-              ))}
-            </div>
-
-            <div className="editor-workspace">
-              <div className="editor-meta">
-                <div>
-                  <p className="editor-breadcrumb">{activeSection.fileName}</p>
-                  <h1>{activeSection.label}</h1>
-                </div>
-              </div>
-
-              <div className="code-pane">
-                <div className="code-toolbar">
-                  <span>{activeSection.fileName}</span>
-                  <span>UTF-8</span>
-                  <span>TypeScript</span>
-                </div>
-
-                <div className="code-content">
-                  {activeSection.lines.map((line, index) => (
-                    <div key={`${activeSection.id}-${index}`} className="code-line">
-                      <span className="line-number">{index + 1}</span>
-                      <div className="line-body">
-                        {line.type === "blank" ? <span>&nbsp;</span> : null}
-
-                        {line.type === "comment" ? (
-                          <span className="token-comment">{line.text}</span>
-                        ) : null}
-
-                        {line.type === "entry" ? (
-                          <span>
-                            <span className="token-key">{line.keyName}</span>
-                            <span className="token-plain">: </span>
-                            {line.href ? (
-                              <a
-                                href={line.href}
-                                className={`token-link ${
-                                  line.tone === "accent"
-                                    ? "token-accent"
-                                    : line.tone === "muted"
-                                      ? "token-muted"
-                                      : "token-string"
-                                }`}
-                                target={
-                                  line.href.startsWith("http") ? "_blank" : undefined
-                                }
-                                rel={
-                                  line.href.startsWith("http")
-                                    ? "noreferrer"
-                                    : undefined
-                                }
-                              >
-                                {line.value}
-                              </a>
-                            ) : (
-                              <span
-                                className={
-                                  line.tone === "accent"
-                                    ? "token-accent"
-                                    : line.tone === "muted"
-                                      ? "token-muted"
-                                      : "token-string"
-                                }
-                              >
-                                {line.value}
-                              </span>
-                            )}
-                          </span>
-                        ) : null}
-
-                        {line.type === "array" ? (
-                          <span>
-                            <span className="token-key">{line.keyName}</span>
-                            <span className="token-plain">: [</span>
-                            {line.values.map((value, itemIndex) => (
-                              <span key={`${line.keyName}-${value}`}>
-                                <span className="token-string">
-                                  &quot;{value}&quot;
-                                </span>
-                                {itemIndex < line.values.length - 1 ? (
-                                  <span className="token-plain">, </span>
-                                ) : null}
-                              </span>
-                            ))}
-                            <span className="token-plain">]</span>
-                          </span>
-                        ) : null}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <nav className="mobile-bottom-bar" aria-label="Navegacao mobile">
-          <button
-            type="button"
-            className={`mobile-bottom-button ${isExplorerOpen ? "is-active" : ""}`}
-            onClick={() => setIsExplorerOpen(true)}
-          >
-            Arquivos
-          </button>
-          <button
-            type="button"
-            className="mobile-bottom-button"
-            onClick={() => setActiveId(sections[0].id)}
-          >
-            Sobre
-          </button>
-          <button
-            type="button"
-            className="mobile-bottom-button"
-            onClick={() => setActiveId(sections[1].id)}
-          >
-            Contato
-          </button>
-        </nav>
-      </section>
-    </main>
+function PolvorSection() {
+  return (
+    <div className="section-content">
+      <CopyRow
+        label="site"
+        copyText="www.polvor.com"
+        href="https://www.polvor.com"
+        delay={0}
+      >
+        www.polvor.com
+      </CopyRow>
+      <CopyRow
+        label="email"
+        copyText="oi@polvor.com"
+        href="mailto:oi@polvor.com"
+        delay={55}
+      >
+        oi@polvor.com
+      </CopyRow>
+      <CopyRow
+        label="instagram"
+        copyText="polvortecnologia"
+        href="https://www.instagram.com/polvortecnologia/"
+        delay={110}
+      >
+        polvortecnologia
+      </CopyRow>
+      <CopyRow
+        label="linkedin"
+        copyText="https://www.linkedin.com/company/polvor-tecnologia-e-software/"
+        href="https://www.linkedin.com/company/polvor-tecnologia-e-software/"
+        delay={165}
+      >
+        polvor-tecnologia-e-software
+      </CopyRow>
+      <CopyRow
+        label="whatsapp"
+        copyText="+5551998135730"
+        href="tel:+5551998135730"
+        delay={220}
+      >
+        (51) 9 9813-5730
+      </CopyRow>
+    </div>
   );
 }
