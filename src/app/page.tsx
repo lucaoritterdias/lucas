@@ -29,18 +29,51 @@ export default function Home() {
 
         <section className="info-col">
           <div className="intro">
-            <p className="intro-lead">
-              Olá, eu sou <strong>Lucas Ritter Dias</strong>.
+            <p>
+              <strong>Lucas Ritter Dias</strong> é formado em Análise e
+              Desenvolvimento de Sistemas pela Unisinos e atua no
+              desenvolvimento de software desde os 14 anos de idade. Sua
+              trajetória começou com a criação de sites em WordPress,
+              plataforma na qual desenvolveu profundo conhecimento técnico ao
+              longo dos anos e que serviu como base para sua evolução
+              profissional.
             </p>
             <p>
-              CTO, Software Engineer e alguém que ainda gosta de escrever
-              código todos os dias.
+              Durante sua jornada, atuou como freelancer em diversos projetos
+              e também teve uma passagem por uma multinacional, onde trabalhou
+              na área de infraestrutura de Tecnologia da Informação. Mesmo
+              nesse período, manteve o foco no desenvolvimento de soluções
+              próprias, conciliando suas atividades profissionais com projetos
+              paralelos e a manutenção de sistemas para clientes.
             </p>
             <p>
-              Atualmente trabalho principalmente com arquitetura de software,
-              desenvolvimento full stack, TypeScript, NestJS, Next.js,
-              Docker, cloud, automações, integrações e produtos SaaS. Também
-              sou fundador da{" "}
+              O espírito empreendedor sempre esteve presente em sua carreira.
+              Motivado pelo crescimento constante dos projetos que conduzia,
+              decidiu transformar a atuação como freelancer em uma operação
+              estruturada, deixando a empresa onde realizava estágio para
+              fundar a R&amp;D Sistemas. Após um ano e meio de crescimento, a
+              empresa evoluiu para a{" "}
+              <a
+                href="https://www.polvor.com"
+                target="_blank"
+                rel="noreferrer"
+                className="info-link"
+              >
+                Polvor Tecnologia e Software
+              </a>
+              , software house criada para ampliar a capacidade de entrega,
+              desenvolver soluções mais robustas e atender empresas com maior
+              escala e complexidade.
+            </p>
+            <p>
+              Ao longo dessa trajetória, construiu parcerias estratégicas que
+              contribuíram para o crescimento do negócio, incluindo a relação
+              profissional que deu origem à sociedade com Jean e Gisele, da
+              Job Content, fortalecendo ainda mais a visão de longo prazo da
+              empresa.
+            </p>
+            <p>
+              Hoje, como CTO e sócio da{" "}
               <a
                 href="https://www.polvor.com"
                 target="_blank"
@@ -49,19 +82,17 @@ export default function Home() {
               >
                 Polvor
               </a>
-              , onde ajudo empresas a transformar ideias em software sob
-              medida e plataformas digitais escaláveis.
+              , Lucas lidera iniciativas de desenvolvimento de software,
+              arquitetura de sistemas, infraestrutura e inovação, combinando
+              experiência técnica com visão de negócio para criar soluções que
+              geram resultados reais para empresas de diferentes segmentos.
             </p>
             <p>
-              Quando não estou desenvolvendo ou desenhando arquiteturas,
-              provavelmente estou estudando alguma tecnologia nova, testando
-              ferramentas, planejando novos produtos ou discutindo como
-              construir sistemas melhores do que os que fiz ontem.
-            </p>
-            <p>
-              Acredito que tecnologia é uma das ferramentas mais poderosas
-              para criar valor. E sigo construindo, aprendendo e evoluindo um
-              sistema por vez.
+              Apesar das conquistas alcançadas até aqui, a visão permanece a
+              mesma: continuar construindo, aprendendo e evoluindo. Afinal,
+              empreender é uma jornada contínua, onde cada projeto entregue,
+              cada cliente atendido e cada desafio superado representam mais
+              um passo na construção de algo maior.
             </p>
           </div>
 
