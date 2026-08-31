@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Logo } from "./Logo";
+import Image from "next/image";
+import lucasAvatar from "../lucas.png";
 
 const DURATION = 1500;
 
@@ -43,7 +44,17 @@ export function Preloader() {
   return (
     <div className="intro" data-done={done} aria-hidden={done}>
       <div className="intro-stack">
-        <Logo className="intro-mark" />
+        <div className="intro-identity">
+          <Image
+            src={lucasAvatar}
+            alt=""
+            width={46}
+            height={46}
+            priority
+            style={{ width: 46, height: 46, objectFit: "cover", objectPosition: "50% 20%", borderRadius: "50%", flexShrink: 0 }}
+          />
+          <span>Lucas Ritter Dias</span>
+        </div>
         <span className="intro-bar" style={{ "--p": p } as React.CSSProperties} />
       </div>
     </div>

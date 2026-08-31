@@ -8,12 +8,9 @@ import {
   IconClose,
   IconGrid,
   IconLayers,
-  IconMoon,
   IconRoute,
   IconStar,
-  IconSun,
 } from "./icons";
-import type { Origin, Theme } from "./useTheme";
 
 type Tab = "projetos" | "trajetoria" | "stack";
 
@@ -25,12 +22,8 @@ const TABS: { id: Tab; label: string; Icon: typeof IconGrid }[] = [
 
 export function WorkModal({
   onClose,
-  theme,
-  setTheme,
 }: {
   onClose: () => void;
-  theme: Theme;
-  setTheme: (t: Theme, origin?: Origin) => void;
 }) {
   const [tab, setTab] = useState<Tab>("projetos");
 
@@ -57,24 +50,6 @@ export function WorkModal({
         </div>
 
         <div className="panel-head-right">
-          <div className="seg" role="group" aria-label="Tema">
-            <button
-              type="button"
-              data-active={theme === "light"}
-              onClick={(e) => setTheme("light", { x: e.clientX, y: e.clientY })}
-            >
-              <IconSun />
-              Claro
-            </button>
-            <button
-              type="button"
-              data-active={theme === "dark"}
-              onClick={(e) => setTheme("dark", { x: e.clientX, y: e.clientY })}
-            >
-              <IconMoon />
-              Escuro
-            </button>
-          </div>
           <button type="button" className="panel-close" onClick={onClose} aria-label="Fechar">
             <IconClose />
           </button>

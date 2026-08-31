@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
-import { themeBootScript } from "./theme-boot";
 import "./globals.css";
 
 const geist = Geist({
@@ -11,13 +10,13 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.lucasritterdias.com.br"),
-  title: "Lucas Ritter Dias · CTO & Software Engineer",
+  title: "Lucas Ritter Dias · Projetos digitais bem construídos",
   description:
-    "CTO e sócio da Polvor Tecnologia e Software. Arquitetura de sistemas, infraestrutura e produto — escrevendo software desde os 14 anos.",
+    "Uma trajetória construída projeto após projeto. Lucas desenvolve produtos digitais desde os 14 anos e hoje é CTO e sócio da Polvor.",
   openGraph: {
-    title: "Lucas Ritter Dias · CTO & Software Engineer",
+    title: "Lucas Ritter Dias · Projetos digitais bem construídos",
     description:
-      "CTO e sócio da Polvor Tecnologia e Software. Arquitetura de sistemas, infraestrutura e produto.",
+      "Mais de uma década transformando ideias e desafios de negócio em produtos digitais.",
     url: "https://www.lucasritterdias.com.br",
     siteName: "Lucas Ritter Dias",
     locale: "pt_BR",
@@ -26,21 +25,15 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
-    { media: "(prefers-color-scheme: light)", color: "#fafafa" },
-  ],
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={geist.variable} suppressHydrationWarning>
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
-      </head>
-      <body suppressHydrationWarning>{children}</body>
+    <html lang="pt-BR" className={geist.variable} data-theme="dark">
+      <body>{children}</body>
     </html>
   );
 }
