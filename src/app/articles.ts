@@ -2,7 +2,7 @@ import "server-only";
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
-import { marked } from "marked";
+import { createMarkdown, readingTime } from "./markdown";
 
 export type ArticleSection = { id: string; title: string; html: string };
 
@@ -40,16 +40,34 @@ function slugify(text: string) {
     .replace(/^-+|-+$/g, "");
 }
 
-function parseSections(markdown: string): ArticleSection[] {
+/** Splits on "## " headings outside fenced code, so a "## " line inside a code block never starts a section. */
+function splitSections(markdown: string) {
+  const parts: string[] = [];
+  let fence: string | null = null;
+  let current: string[] = [];
+
+  for (const line of markdown.split("\n")) {
+    const opener = line.match(/^\s*(`{3,}|~{3,})/)?.[1];
+    if (opener && (fence === null || opener.startsWith(fence))) fence = fence === null ? opener : null;
+    if (fence === null && /^##\s/.test(line) && current.length) {
+      parts.push(current.join("\n"));
+      current = [];
+    }
+    current.push(line);
+  }
+  parts.push(current.join("\n"));
+  return parts;
+}
+
+function parseSections(markdown: string, md: ReturnType<typeof createMarkdown>): ArticleSection[] {
   const seen = new Map<string, number>();
-  return markdown
-    .split(/\n(?=##\s)/)
+  return splitSections(markdown)
     .map((part) => part.trim())
     .filter(Boolean)
     .map((part) => {
       const [heading, ...rest] = part.split("\n");
       const title = heading.replace(/^##\s*/, "").trim();
-      const html = marked.parse(rest.join("\n").trim(), { async: false });
+      const html = md.parse(rest.join("\n").trim(), { async: false });
       const base = slugify(title) || "secao";
       const count = seen.get(base) ?? 0;
       seen.set(base, count + 1);
@@ -60,6 +78,7 @@ function parseSections(markdown: string): ArticleSection[] {
 function loadArticles(locale: "pt" | "en"): Article[] {
   const dir = path.join(CONTENT_DIR, locale);
   const files = fs.readdirSync(dir).filter((file) => file.endsWith(".md"));
+  const md = createMarkdown(locale, dir);
 
   const parsed = files.map((file) => {
     const raw = fs.readFileSync(path.join(dir, file), "utf8");
@@ -69,11 +88,11 @@ function loadArticles(locale: "pt" | "en"): Article[] {
       slug: data.slug as string,
       category: data.category as string,
       isoDate: rawDate instanceof Date ? rawDate.toISOString().slice(0, 10) : rawDate,
-      time: data.time as string,
+      time: (data.time as string) ?? readingTime(content),
       word: (data.word as string) ?? "",
       title: data.title as string,
       excerpt: data.excerpt as string,
-      sections: parseSections(content),
+      sections: parseSections(content, md),
     };
   });
 

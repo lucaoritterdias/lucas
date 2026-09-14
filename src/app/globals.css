@@ -10,6 +10,23 @@
   --soft-ink: #5c5c5c;
   --rule: #161616;
   --quiet-rule: #d8d8d8;
+  --tint: #f5f5f3;
+
+  /* code — ink first, two quiet accents */
+  --code-background: #fafaf8;
+  --code-foreground: #1a1a1a;
+  --code-mark: #eeeeea;
+  --code-token-comment: #7c7c78;
+  --code-token-keyword: #111111;
+  --code-token-constant: #8a3f12;
+  --code-token-string: #2f6140;
+  --code-token-string-expression: #2f6140;
+  --code-token-function: #1f4a86;
+  --code-token-parameter: #1a1a1a;
+  --code-token-punctuation: #6b6b67;
+  --code-token-link: #1f4a86;
+  --code-token-inserted: #2f6140;
+  --code-token-deleted: #9b2c2c;
 
   --gutter: clamp(1.25rem, 4vw, 4.5rem);
   --sans: var(--font-geist), "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -25,6 +42,21 @@
   --soft-ink: #9a9a9a;
   --rule: #d4d4d4;
   --quiet-rule: #2c2c2c;
+  --tint: #151515;
+  --code-background: #111111;
+  --code-foreground: #e4e4e4;
+  --code-mark: #1d1d1d;
+  --code-token-comment: #8a8a86;
+  --code-token-keyword: #f2f2f2;
+  --code-token-constant: #e0a577;
+  --code-token-string: #9ccaa5;
+  --code-token-string-expression: #9ccaa5;
+  --code-token-function: #94b8ea;
+  --code-token-parameter: #e4e4e4;
+  --code-token-punctuation: #9a9a96;
+  --code-token-link: #94b8ea;
+  --code-token-inserted: #9ccaa5;
+  --code-token-deleted: #ef9a9a;
   color-scheme: dark;
 }
 
@@ -36,6 +68,21 @@
     --soft-ink: #9a9a9a;
     --rule: #d4d4d4;
     --quiet-rule: #2c2c2c;
+    --tint: #151515;
+    --code-background: #111111;
+    --code-foreground: #e4e4e4;
+    --code-mark: #1d1d1d;
+    --code-token-comment: #8a8a86;
+    --code-token-keyword: #f2f2f2;
+    --code-token-constant: #e0a577;
+    --code-token-string: #9ccaa5;
+    --code-token-string-expression: #9ccaa5;
+    --code-token-function: #94b8ea;
+    --code-token-parameter: #e4e4e4;
+    --code-token-punctuation: #9a9a96;
+    --code-token-link: #94b8ea;
+    --code-token-inserted: #9ccaa5;
+    --code-token-deleted: #ef9a9a;
     color-scheme: dark;
   }
 }
@@ -793,6 +840,13 @@ main {
   font-size: 0.82em;
 }
 
+.prose :not(pre) > code {
+  padding: 0.08em 0.3em;
+  border-radius: 3px;
+  background: var(--tint);
+  overflow-wrap: anywhere;
+}
+
 .prose pre {
   padding: 1rem 1.25rem;
   overflow-x: auto;
@@ -803,6 +857,230 @@ main {
   margin: 2.5em 0;
   border: 0;
   border-top: 1px solid var(--quiet-rule);
+}
+
+.prose h3 + p {
+  margin-top: 0;
+}
+
+/* ── code blocks: shiki with the css-variables theme ── */
+
+.prose .code {
+  margin: 1.6em 0 1.8em;
+  border: 1px solid var(--quiet-rule);
+  background: var(--code-background);
+}
+
+.code-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid var(--quiet-rule);
+  color: var(--soft-ink);
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.03em;
+}
+
+.code-bar span:last-child {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.prose .code pre {
+  margin: 0;
+  padding: 1rem 0;
+  border: 0;
+  background: transparent !important;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  tab-size: 2;
+}
+
+.prose .code pre code {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+  font-size: inherit;
+}
+
+.prose .code .line {
+  display: inline-block;
+  min-width: 100%;
+  padding: 0 1.1rem;
+}
+
+.prose .code .line-marked {
+  background: var(--code-mark);
+  box-shadow: inset 2px 0 0 var(--ink);
+}
+
+/* comments are the author talking — let them read as asides */
+.prose .code span[style*="--code-token-comment"] {
+  font-style: italic;
+}
+
+/* ── callouts: > [!NOTE] / [!TIP] / [!WARNING] ── */
+
+.prose .callout {
+  margin: 1.8em 0;
+  padding: 1rem 1.2rem 1.05rem;
+  border: 1px solid var(--quiet-rule);
+  border-left: 2px solid var(--ink);
+  background: var(--tint);
+  font-family: var(--sans);
+  font-size: 0.93rem;
+  line-height: 1.6;
+}
+
+.prose .callout p {
+  margin: 0;
+}
+
+.prose .callout p + p,
+.prose .callout ul,
+.prose .callout ol {
+  margin: 0.7em 0 0;
+}
+
+.prose .callout-title {
+  margin-bottom: 0.45rem !important;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.prose .callout-warning {
+  border-left-style: double;
+  border-left-width: 4px;
+}
+
+.prose .callout-tip .callout-title::before {
+  content: "→ ";
+}
+
+.prose .callout-warning .callout-title::before {
+  content: "! ";
+}
+
+/* ── figures: inline SVG drawn in theme tokens ── */
+
+.prose .figure {
+  margin: 2em 0 2.2em;
+}
+
+.figure svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: clamp(0.75rem, 2.5vw, 1.5rem);
+  border: 1px solid var(--quiet-rule);
+  color: var(--ink);
+  font-family: var(--mono);
+}
+
+.figure svg text {
+  fill: currentColor;
+}
+
+.figure svg .f-line {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1;
+}
+
+.figure svg .f-bold {
+  stroke-width: 2;
+}
+
+.figure svg .f-quiet {
+  fill: none;
+  stroke: var(--quiet-rule);
+  stroke-width: 1;
+}
+
+.figure svg .f-dash {
+  stroke-dasharray: 4 4;
+}
+
+.figure svg .f-fill {
+  fill: currentColor;
+}
+
+.figure svg .f-tint {
+  fill: var(--tint);
+}
+
+.figure svg .f-paper {
+  fill: var(--paper);
+}
+
+.figure svg text.f-soft {
+  fill: var(--soft-ink);
+}
+
+.figure svg text.f-paper {
+  fill: var(--paper);
+}
+
+.figure figcaption {
+  margin-top: 0.7rem;
+  color: var(--soft-ink);
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+/* ── tables ── */
+
+.prose .table-wrap {
+  margin: 1.6em 0 1.8em;
+  overflow-x: auto;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 0.86rem;
+  line-height: 1.45;
+  font-variant-numeric: tabular-nums;
+}
+
+.prose th,
+.prose td {
+  padding: 0.6rem 0.9rem 0.6rem 0;
+  border-bottom: 1px solid var(--quiet-rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose th {
+  border-bottom-color: var(--rule);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.prose td code {
+  white-space: nowrap;
+}
+
+.prose th[align="right"],
+.prose td[align="right"] {
+  padding-right: 1.75rem;
+  text-align: right;
+}
+
+.prose th[align="center"],
+.prose td[align="center"] {
+  text-align: center;
 }
 
 .article-signature {
