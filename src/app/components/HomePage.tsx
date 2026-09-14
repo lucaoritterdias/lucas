@@ -117,7 +117,7 @@ export function HomePage({ locale = "pt" }: { locale?: "pt" | "en" }) {
                   <span className="row-kicker">{t.projects[index].kicker}</span>
                   <span className="row-name">{t.projects[index].name}</span>
                   <span className="row-description">{t.projects[index].description}</span>
-                  <span className="arrow" aria-hidden>↗</span>
+                  <span className="arrow" aria-hidden>→</span>
                 </a>
               </li>
             ))}

@@ -33,7 +33,7 @@ export function ContactView({ locale }: { locale: "pt" | "en" }) {
                 <span className="row-kicker">{channel.kicker}</span>
                 <span className="row-name">{channel.name}</span>
                 <span className="row-description">{channel.detail}</span>
-                <span className="arrow" aria-hidden>↗</span>
+                <span className="arrow" aria-hidden>→</span>
               </a>
             </li>
           ))}
