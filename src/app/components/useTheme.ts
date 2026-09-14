@@ -1,39 +1,24 @@
 "use client";
 
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback } from "react";
 import { THEME_KEY } from "../theme-boot";
 
 export type Theme = "dark" | "light";
 export type Origin = { x: number; y: number };
 
-/**
- * The <html data-theme> attribute is the source of truth — the boot script
- * sets it before first paint, so we read it as an external store rather than
- * mirroring it into React state.
- */
-function subscribe(onChange: () => void) {
-  const observer = new MutationObserver(onChange);
-  observer.observe(document.documentElement, {
-    attributes: true,
-    attributeFilter: ["data-theme"],
-  });
-  return () => observer.disconnect();
-}
-
-const getSnapshot = (): Theme =>
-  document.documentElement.dataset.theme === "light" ? "light" : "dark";
-
-const getServerSnapshot = (): Theme => "dark";
-
-let swapTimer: ReturnType<typeof setTimeout> | undefined;
-
 type ViewTransitionDocument = Document & {
   startViewTransition?: (cb: () => void) => { ready: Promise<void> };
 };
 
-export function useTheme() {
-  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+/**
+ * The <html data-theme> attribute is the source of truth — the boot script
+ * sets it before first paint, and CSS reads it directly, so nothing here
+ * needs to mirror it into React state.
+ */
+const current = (): Theme =>
+  document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 
+export function useTheme() {
   const setTheme = useCallback((next: Theme, origin?: Origin) => {
     const commit = () => {
       document.documentElement.dataset.theme = next;
@@ -43,14 +28,6 @@ export function useTheme() {
         /* storage unavailable — the in-memory theme still applies */
       }
     };
-
-    /* cue the backdrop flourishes that aren't inside the hero stage */
-    const root = document.documentElement;
-    clearTimeout(swapTimer);
-    root.classList.remove("theme-swapping");
-    void root.offsetWidth;
-    root.classList.add("theme-swapping");
-    swapTimer = setTimeout(() => root.classList.remove("theme-swapping"), 1500);
 
     const doc = document as ViewTransitionDocument;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -79,7 +56,7 @@ export function useTheme() {
             ],
           },
           {
-            duration: 700,
+            duration: 600,
             easing: "cubic-bezier(0.22, 1, 0.36, 1)",
             pseudoElement: "::view-transition-new(root)",
           }
@@ -91,11 +68,9 @@ export function useTheme() {
   }, []);
 
   const toggle = useCallback(
-    (origin?: Origin) => {
-      setTheme(getSnapshot() === "dark" ? "light" : "dark", origin);
-    },
+    (origin?: Origin) => setTheme(current() === "dark" ? "light" : "dark", origin),
     [setTheme]
   );
 
-  return { theme, setTheme, toggle };
+  return { setTheme, toggle };
 }

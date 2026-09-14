@@ -1,171 +1,77 @@
-type P = React.SVGProps<SVGSVGElement>;
+const base = { width: 20, height: 20, viewBox: "0 0 24 24", "aria-hidden": true } as const;
 
-const stroke = {
-  fill: "none",
-  stroke: "currentColor",
-  strokeWidth: 1.7,
-  strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
-};
-
-export function IconGithub(p: P) {
+export function IconGithub() {
   return (
-    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden {...p}>
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"
-      />
+    <svg {...base} fill="currentColor">
+      <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.26 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z" />
     </svg>
   );
 }
 
-export function IconInstagram(p: P) {
+export function IconRss() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <rect x="2.5" y="2.5" width="19" height="19" rx="5.4" />
-      <circle cx="12" cy="12" r="4.1" />
-      <circle cx="17.6" cy="6.4" r="1.05" fill="currentColor" stroke="none" />
+    <svg {...base} fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round">
+      <path d="M5 11a8 8 0 0 1 8 8M5 5a14 14 0 0 1 14 14" />
+      <circle cx="5.5" cy="18.5" r="1.5" fill="currentColor" stroke="none" />
     </svg>
   );
 }
 
-export function IconWhatsapp(p: P) {
+export function IconSun() {
   return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...p}>
-      <path d="M12.04 2C6.6 2 2.2 6.4 2.2 11.84c0 1.74.46 3.44 1.33 4.94L2.1 22l5.35-1.4a9.8 9.8 0 0 0 4.59 1.16h.01c5.43 0 9.84-4.4 9.84-9.84 0-2.63-1.02-5.1-2.88-6.96A9.77 9.77 0 0 0 12.04 2Zm0 1.8c2.14 0 4.16.84 5.68 2.36a7.97 7.97 0 0 1 2.35 5.68c0 4.44-3.6 8.04-8.04 8.04-1.45 0-2.87-.39-4.11-1.13l-.3-.17-3.18.83.85-3.1-.2-.32a7.98 7.98 0 0 1-1.22-4.25c0-4.44 3.6-8.04 8.17-8.04Zm-3.4 4.3c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02s.87 2.34 1 2.5c.12.16 1.7 2.6 4.13 3.64.58.25 1.03.4 1.38.51.58.19 1.11.16 1.53.1.47-.07 1.44-.59 1.64-1.16.2-.57.2-1.05.14-1.16-.06-.1-.22-.16-.46-.28-.24-.12-1.44-.71-1.66-.79-.22-.08-.39-.12-.55.12-.16.24-.63.79-.77.95-.14.16-.28.18-.52.06-.24-.12-1.03-.38-1.96-1.21-.72-.65-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.19-.47-.39-.4-.53-.41h-.47Z" />
+    <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
     </svg>
   );
 }
 
-export function IconMail(p: P) {
+export function IconMoon() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <rect x="2.4" y="4.6" width="19.2" height="14.8" rx="2.6" />
-      <path d="m3.4 6.4 8.6 6 8.6-6" />
+    <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11Z" />
     </svg>
   );
 }
 
-export function IconPhone(p: P) {
+export function IconX() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
+    <svg {...base} fill="currentColor">
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
     </svg>
   );
 }
 
-export function IconArticle(p: P) {
+export function IconWhatsapp() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <path d="M14 2.8H6.6a2 2 0 0 0-2 2v14.4a2 2 0 0 0 2 2h10.8a2 2 0 0 0 2-2V8.4Z" />
-      <path d="M13.8 2.9V8.4h5.5" />
-      <path d="M8.4 13h7.2M8.4 16.6h5" />
+    <svg {...base} fill="currentColor">
+      <path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.6.13-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.2-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48s1.07 2.88 1.21 3.07c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.7.63.71.22 1.36.19 1.87.11.57-.08 1.76-.72 2-1.41.25-.7.25-1.29.18-1.41-.08-.13-.28-.2-.57-.35M12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z" />
     </svg>
   );
 }
 
-export function IconClose(p: P) {
+export function IconInstagram() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} strokeWidth={2} {...p}>
-      <path d="M6 6 18 18M18 6 6 18" />
+    <svg {...base} fill="none" stroke="currentColor" strokeWidth={1.8}>
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.3" cy="6.7" r="1" fill="currentColor" stroke="none" />
     </svg>
   );
 }
 
-export function IconArrowRight(p: P) {
+export function IconBluesky() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} strokeWidth={2} {...p}>
-      <path d="M5 12h13M12.5 5.8 18.7 12l-6.2 6.2" />
+    <svg {...base} fill="currentColor">
+      <path d="M12 10.8c-1.09-2.11-4.05-6.05-6.8-8-2.64-1.86-3.64-1.54-4.3-1.24C.14 1.91 0 3.08 0 3.77c0 .69.38 5.65.62 6.48.82 2.74 3.71 3.66 6.38 3.36l.42-.05-.42.05c-3.91.58-7.39 2-2.83 7.08 5.01 5.19 6.87-1.11 7.83-4.31.95 3.2 2.05 9.27 7.73 4.31 4.27-4.31 1.17-6.5-2.74-7.08l-.42-.05.42.05c2.67.3 5.57-.63 6.38-3.36.25-.83.62-5.79.62-6.48 0-.69-.14-1.86-.9-2.21-.66-.3-1.66-.62-4.3 1.24-2.75 1.95-5.71 5.89-6.8 8Z" />
     </svg>
   );
 }
 
-export function IconArrowUpRight(p: P) {
+export function IconLinkedin() {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} strokeWidth={2} {...p}>
-      <path d="M7 17 17 7M8.4 7H17v8.6" />
-    </svg>
-  );
-}
-
-export function IconSun(p: P) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <circle cx="12" cy="12" r="4.2" />
-      <path d="M12 2.4v2.2M12 19.4v2.2M4.4 12H2.2M21.8 12h-2.2M6.6 6.6 5.1 5.1M18.9 18.9l-1.5-1.5M17.4 6.6l1.5-1.5M5.1 18.9l1.5-1.5" />
-    </svg>
-  );
-}
-
-export function IconMoon(p: P) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <path d="M20.5 14.3A8.6 8.6 0 0 1 9.7 3.5a8.6 8.6 0 1 0 10.8 10.8Z" />
-    </svg>
-  );
-}
-
-export function IconStar(p: P) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden {...p}>
-      <path d="m12 2.6 2.9 5.9 6.5.95-4.7 4.58 1.11 6.47L12 17.44 6.19 20.5 7.3 14.03 2.6 9.45l6.5-.95L12 2.6Z" />
-    </svg>
-  );
-}
-
-export function IconGrid(p: P) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <rect x="3.2" y="3.2" width="7.6" height="7.6" rx="2" />
-      <rect x="13.2" y="3.2" width="7.6" height="7.6" rx="2" />
-      <rect x="3.2" y="13.2" width="7.6" height="7.6" rx="2" />
-      <rect x="13.2" y="13.2" width="7.6" height="7.6" rx="2" />
-    </svg>
-  );
-}
-
-export function IconRoute(p: P) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <circle cx="5.6" cy="18.4" r="2.6" />
-      <circle cx="18.4" cy="5.6" r="2.6" />
-      <path d="M8.2 18.4h6.2a3.6 3.6 0 0 0 0-7.2H9.6a3.6 3.6 0 0 1 0-7.2h6.2" />
-    </svg>
-  );
-}
-
-export function IconLayers(p: P) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <path d="m12 2.8 9 4.6-9 4.6-9-4.6 9-4.6Z" />
-      <path d="m3 12.4 9 4.6 9-4.6M3 16.9l9 4.6 9-4.6" />
-    </svg>
-  );
-}
-
-export function IconCopy(p: P) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} {...p}>
-      <rect x="9" y="9" width="12.4" height="12.4" rx="2.4" />
-      <path d="M5.2 15H4.4a2 2 0 0 1-2-2V4.6a2 2 0 0 1 2-2H13a2 2 0 0 1 2 2v.8" />
-    </svg>
-  );
-}
-
-export function IconCheck(p: P) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden {...stroke} strokeWidth={2.2} {...p}>
-      <path d="m5 12.6 4.6 4.6L19 6.4" />
-    </svg>
-  );
-}
-
-export function IconVideo(p: P) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden {...p}>
-      <rect x="2.4" y="5.6" width="13.4" height="12.8" rx="3" fill="#fbbf24" />
-      <path d="m17.4 11 4.2-2.8v7.6L17.4 13Z" fill="#f59e0b" />
+    <svg {...base} fill="currentColor">
+      <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
     </svg>
   );
 }

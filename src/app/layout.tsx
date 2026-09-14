@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Geist, Geist_Mono, Newsreader } from "next/font/google";
+import { SiteFooter } from "./components/SiteFooter";
+import { SITE_URL } from "./data";
+import { SiteHeader } from "./components/SiteHeader";
+import { themeBootScript } from "./theme-boot";
 import "./globals.css";
 
 const geist = Geist({
@@ -8,16 +12,38 @@ const geist = Geist({
   display: "swap",
 });
 
+const geistMono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-geist-mono",
+  display: "swap",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  axes: ["opsz"],
+  variable: "--font-newsreader",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.lucasritterdias.com.br"),
-  title: "Lucas Ritter Dias · Projetos digitais bem construídos",
+  metadataBase: new URL(SITE_URL),
+  title: "Lucas Ritter Dias · Engenheiro de software e CTO",
   description:
-    "Uma trajetória construída projeto após projeto. Lucas desenvolve produtos digitais desde os 14 anos e hoje é CTO e sócio da Polvor.",
+    "Lucas Ritter Dias é engenheiro de software, CTO e sócio da Polvor. Desenvolve produtos digitais desde os 14 anos.",
+  alternates: {
+    types: {
+      "application/rss+xml": [
+        { url: "/feed.xml", title: "Artigos · Lucas Ritter Dias" },
+        { url: "/en/feed.xml", title: "Articles · Lucas Ritter Dias" },
+      ],
+    },
+  },
   openGraph: {
-    title: "Lucas Ritter Dias · Projetos digitais bem construídos",
+    title: "Lucas Ritter Dias · Engenheiro de software e CTO",
     description:
-      "Mais de uma década transformando ideias e desafios de negócio em produtos digitais.",
-    url: "https://www.lucasritterdias.com.br",
+      "Mais de uma década transformando desafios reais de negócio em produtos digitais.",
+    url: SITE_URL,
     siteName: "Lucas Ritter Dias",
     locale: "pt_BR",
     type: "website",
@@ -25,15 +51,30 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0c0c0c" },
+  ],
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={geist.variable} data-theme="dark">
-      <body>{children}</body>
+    <html
+      lang="pt-BR"
+      className={`${geist.variable} ${geistMono.variable} ${newsreader.variable}`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
+      </head>
+      <body>
+        <SiteHeader />
+        {children}
+        <SiteFooter year={new Date().getFullYear()} />
+      </body>
     </html>
   );
 }
