@@ -1,6 +1,7 @@
 ---
 slug: projetos-ensinam
 category: Negócio
+tags: [engenharia-de-software, decisoes, projetos]
 date: 2026-08-17
 word: APRENDER
 title: O que muitos projetos ensinam sobre boas decisões

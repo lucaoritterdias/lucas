@@ -1,6 +1,7 @@
 ---
 slug: frontends-melhores-com-skills
 category: AI
+tags: [ai, frontend, claude-code, design-system]
 date: 2026-09-14
 word: CONTEXTO
 title: Better frontends with Claude Code skills

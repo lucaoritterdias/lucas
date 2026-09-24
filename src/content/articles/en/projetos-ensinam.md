@@ -1,6 +1,7 @@
 ---
 slug: projetos-ensinam
 category: Business
+tags: [software-engineering, decisions, projects]
 date: 2026-08-17
 word: APRENDER
 title: What many projects teach about good decisions

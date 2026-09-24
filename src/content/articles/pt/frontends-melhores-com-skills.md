@@ -1,6 +1,7 @@
 ---
 slug: frontends-melhores-com-skills
 category: IA
+tags: [ia, frontend, claude-code, design-system]
 date: 2026-09-14
 word: CONTEXTO
 title: Frontends melhores com skills do Claude Code

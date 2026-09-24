@@ -1,6 +1,7 @@
 ---
 slug: complexidade-nao-e-valor
 category: Tecnologia
+tags: [arquitetura-de-software, simplicidade, tecnologia]
 date: 2026-08-24
 word: SIMPLIFICAR
 title: Complexidade não é sinônimo de valor

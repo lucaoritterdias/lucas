@@ -1,6 +1,7 @@
 ---
 slug: software-que-permanece
 category: Product
+tags: [software-engineering, devops, observability]
 date: 2026-08-31
 word: PERMANECER
 title: The best software does not end at delivery

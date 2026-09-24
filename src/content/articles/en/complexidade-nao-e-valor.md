@@ -1,6 +1,7 @@
 ---
 slug: complexidade-nao-e-valor
 category: Technology
+tags: [software-architecture, simplicity, technology]
 date: 2026-08-24
 word: SIMPLIFICAR
 title: Complexity is not the same as value

@@ -9,6 +9,7 @@ export type ArticleSection = { id: string; title: string; html: string };
 export type Article = {
   slug: string;
   category: string;
+  tags: string[];
   number: string;
   /** YYYY-MM-DD, for feeds and <time> */
   isoDate: string;
@@ -87,6 +88,7 @@ function loadArticles(locale: "pt" | "en"): Article[] {
     return {
       slug: data.slug as string,
       category: data.category as string,
+      tags: (data.tags as string[]) ?? [],
       isoDate: rawDate instanceof Date ? rawDate.toISOString().slice(0, 10) : rawDate,
       time: (data.time as string) ?? readingTime(content),
       word: (data.word as string) ?? "",
