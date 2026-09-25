@@ -1,7 +1,6 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ARTICLES, EN_ARTICLES } from "../articles";
-import avatar from "../avatar.png";
+import { ArticleList } from "./ArticleList";
 
 const COPY = {
   pt: {
@@ -28,9 +27,11 @@ export function HomePage({ locale = "pt" }: { locale?: "pt" | "en" }) {
         <div className="home-identity">
           <Image
             className="home-avatar"
-            src={avatar}
+            src="/library/lucas-perfil.jpeg"
             alt=""
             priority
+            width={96}
+            height={96}
             sizes="(max-width: 720px) 64px, 96px"
           />
           <h1 id="page-title">Lucas Ritter Dias</h1>
@@ -39,20 +40,7 @@ export function HomePage({ locale = "pt" }: { locale?: "pt" | "en" }) {
       </section>
 
       <section className="home-articles article-list" aria-label={t.articles}>
-        <ul>
-          {articles.map((article) => (
-            <li key={article.slug}>
-              <Link href={`${articleBase}/${article.slug}`}>
-                {article.title}
-              </Link>
-              <div className="article-tags" aria-label={en ? "Tags" : "Etiquetas"}>
-                {article.tags.map((tag) => (
-                  <span key={tag}>#{tag}</span>
-                ))}
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ArticleList articles={articles} base={articleBase} locale={locale} />
       </section>
     </main>
   );

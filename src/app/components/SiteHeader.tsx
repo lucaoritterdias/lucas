@@ -11,12 +11,13 @@ const SEARCH_DOMAIN = "lucasritterdias.com.br";
 
 const ROUTES: [pt: string, en: string][] = [
   ["/artigos", "/en/articles"],
+  ["/projetos", "/en/projects"],
   ["/contato", "/en/contact"],
 ];
 
 const LABELS = {
-  pt: ["Artigos", "Contato"],
-  en: ["Articles", "Contact"],
+  pt: ["Artigos", "Projetos", "Contato"],
+  en: ["Articles", "Projects", "Contact"],
 };
 
 /** Same page in the other language — every localized route shares its slug. */
@@ -100,6 +101,23 @@ export function SiteHeader() {
           llms.txt
         </a>
       </nav>
+
+      <details className="mobile-menu">
+        <summary>{english ? "Menu" : "Menu"}</summary>
+        <nav aria-label={english ? "Mobile menu" : "Menu móvel"}>
+          {ROUTES.map((route, index) => {
+            const href = english ? route[1] : route[0];
+            return (
+              <Link key={href} href={href} aria-current={pathname.startsWith(href) ? "page" : undefined}>
+                {labels[index]}
+              </Link>
+            );
+          })}
+          <a href={PROFILE.github} target="_blank" rel="noreferrer">GitHub</a>
+          <a href={english ? "/en/feed.xml" : "/feed.xml"}>RSS</a>
+          <a href="/llms.txt">llms.txt</a>
+        </nav>
+      </details>
 
       <div className="header-tools">
         <a className="icon-button header-github" href={PROFILE.github} target="_blank" rel="noreferrer" aria-label="GitHub" title="GitHub">

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Article } from "../articles";
 import { commentsEnabled } from "../comments";
+import { ArticleList } from "./ArticleList";
 import { Comments } from "./Comments";
 
 const COPY = {
@@ -20,24 +21,7 @@ const COPY = {
 
 type Locale = keyof typeof COPY;
 
-function ArticleRows({ articles, base, locale }: { articles: Article[]; base: string; locale: Locale }) {
-  return (
-    <ul>
-      {articles.map((article) => (
-        <li key={article.slug}>
-          <Link href={`${base}/${article.slug}`}>{article.title}</Link>
-          <div className="article-tags" aria-label={locale === "en" ? "Tags" : "Etiquetas"}>
-            {article.tags.map((tag) => (
-              <span key={tag}>#{tag}</span>
-            ))}
-          </div>
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-export function ArticleIndex({ articles, locale }: { articles: Article[]; locale: Locale }) {
+export function ArticleIndex({ articles, locale, selectedTag }: { articles: Article[]; locale: Locale; selectedTag?: string }) {
   const t = COPY[locale];
   return (
     <main className="home article-index">
@@ -45,7 +29,7 @@ export function ArticleIndex({ articles, locale }: { articles: Article[]; locale
         <h1>{t.index}</h1>
       </header>
       <section className="home-articles article-list" aria-label={t.index}>
-        <ArticleRows articles={articles} base={t.base} locale={locale} />
+        <ArticleList articles={articles} base={t.base} locale={locale} selectedTag={selectedTag} filters />
       </section>
     </main>
   );
@@ -61,6 +45,17 @@ export function ArticleView({ article, locale }: { article: Article; locale: Loc
           <header className="article-head">
             <h1 className="article-title">{article.title}</h1>
             <p className="article-lead">{article.excerpt}</p>
+            <div className="article-view-meta">
+              <span>{article.date}</span>
+              <span>{article.time}</span>
+            </div>
+            <div className="article-tags article-view-tags" aria-label={locale === "en" ? "Tags" : "Etiquetas"}>
+              {article.tags.map((tag) => (
+                <Link key={tag} href={`${t.base}?tag=${encodeURIComponent(tag)}`}>
+                  #{tag}
+                </Link>
+              ))}
+            </div>
           </header>
 
           <div className="prose">

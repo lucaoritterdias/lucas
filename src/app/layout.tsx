@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import { SiteFooter } from "./components/SiteFooter";
 import { SITE_URL } from "./data";
 import { SiteHeader } from "./components/SiteHeader";
+import { StructuredData } from "./components/StructuredData";
 import { themeBootScript } from "./theme-boot";
 import "./globals.css";
 
@@ -25,6 +26,39 @@ const newsreader = Newsreader({
   variable: "--font-newsreader",
   display: "swap",
 });
+
+const siteStructuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: "Lucas Ritter Dias",
+      url: SITE_URL,
+      image: `${SITE_URL}/library/lucas-perfil.jpeg`,
+      jobTitle: "CTO e engenheiro de software",
+      sameAs: [
+        "https://github.com/lucaoritterdias",
+        "https://www.instagram.com/ritterdiaslucas",
+      ],
+      worksFor: { "@id": "https://www.polvor.com/#organization" },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://www.polvor.com/#organization",
+      name: "Polvor Tecnologia e Software",
+      url: "https://www.polvor.com",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: "Lucas Ritter Dias",
+      inLanguage: ["pt-BR", "en"],
+      publisher: { "@id": `${SITE_URL}/#person` },
+    },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -71,6 +105,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeBootScript }} />
       </head>
       <body>
+        <StructuredData data={siteStructuredData} />
         <SiteHeader />
         {children}
         <SiteFooter year={new Date().getFullYear()} />
