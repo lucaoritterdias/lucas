@@ -652,7 +652,8 @@ main {
 }
 
 /* News has its own editorial identity across home, index and reading view. */
-.news-cover {
+.news-cover,
+.article-cover.news-cover {
   background:
     radial-gradient(90% 85% at 50% 0%, rgb(255 208 92 / 58%), transparent 68%),
     linear-gradient(160deg, #d95f18 0%, #6b1d12 100%);
