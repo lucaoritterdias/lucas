@@ -1,0 +1,44 @@
+name: Daily News
+
+on:
+  schedule:
+    # 18:00 in São Paulo (UTC-3; Brazil has not observed daylight saving time since 2019).
+    - cron: "0 21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-news
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run news
+      - run: npm run build
+
+      - name: Commit the edition when one was created
+        run: |
+          if git diff --quiet -- src/content/articles/pt; then
+            echo "No edition to publish."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/content/articles/pt/news-*.md
+          git commit -m "content: publish daily News"
+          git push

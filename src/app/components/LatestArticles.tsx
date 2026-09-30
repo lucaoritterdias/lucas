@@ -34,9 +34,9 @@ export function LatestArticles({ locale }: { locale: "pt" | "en" }) {
       <ul className="latest-grid">
         {latest.map((article) => (
           <li key={article.slug}>
-            <Link className="latest-card" href={`${t.base}/${article.slug}`}>
+            <Link className={`latest-card${article.kind === "news" ? " news-card" : ""}`} href={`${t.base}/${article.slug}`}>
               {/* typographic cover from the article's signature word */}
-              <span className="latest-cover" aria-hidden>
+              <span className={`latest-cover${article.kind === "news" ? " news-cover" : ""}`} aria-hidden>
                 <span className="latest-cover-number">Nº {article.number}</span>
                 <span className="latest-cover-word">{article.word || article.category}</span>
               </span>

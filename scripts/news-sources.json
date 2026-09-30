@@ -1,0 +1,8 @@
+[
+  { "name": "GitHub Blog", "url": "https://github.blog/feed/" },
+  { "name": "GitHub Changelog", "url": "https://github.blog/changelog/feed/" },
+  { "name": "Cloudflare Blog", "url": "https://blog.cloudflare.com/rss/" },
+  { "name": "Google Technology", "url": "https://blog.google/rss/" },
+  { "name": "Microsoft DevBlogs", "url": "https://devblogs.microsoft.com/feed/" },
+  { "name": "Mozilla Hacks", "url": "https://hacks.mozilla.org/feed/" }
+]

@@ -72,7 +72,7 @@ export function ArticleView({ article, locale }: { article: Article; locale: Loc
           </header>
 
           {/* same typographic cover as the article cards, at full page width */}
-          <div className="article-cover" aria-hidden>
+          <div className={`article-cover${article.kind === "news" ? " news-cover" : ""}`} aria-hidden>
             <span className="article-cover-number">Nº {article.number}</span>
             <span className="article-cover-word">{article.word || article.category}</span>
           </div>

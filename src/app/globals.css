@@ -651,6 +651,17 @@ main {
   color: #ffffff;
 }
 
+/* News has its own editorial identity across home, index and reading view. */
+.news-cover {
+  background:
+    radial-gradient(90% 85% at 50% 0%, rgb(255 208 92 / 58%), transparent 68%),
+    linear-gradient(160deg, #d95f18 0%, #6b1d12 100%);
+}
+
+.news-card {
+  border-color: color-mix(in srgb, #d95f18 42%, var(--quiet-rule));
+}
+
 .latest-cover-number {
   position: absolute;
   top: 0.8rem;
@@ -2754,8 +2765,24 @@ main {
 }
 
 .article-index .article-card-grid li {
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
   width: 100%;
   margin: 0;
+}
+
+.article-card-cover {
+  flex: none;
+  text-decoration: none !important;
+}
+
+.article-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1.5rem, 3vw, 2.25rem);
 }
 
 @media (max-width: 1024px) {

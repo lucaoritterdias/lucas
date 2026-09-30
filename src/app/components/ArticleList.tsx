@@ -100,22 +100,32 @@ export function ArticleList({
       ) : (
         <ul className="article-card-grid">
           {visible.map((article) => (
-            <li key={article.slug}>
-              <Link className="article-list-category" href={`${base}?category=${encodeURIComponent(article.category)}`}>
-                {article.category}
+            <li key={article.slug} className={article.kind === "news" ? "news-card" : undefined}>
+              <Link
+                className={`latest-cover article-card-cover${article.kind === "news" ? " news-cover" : ""}`}
+                href={`${base}/${article.slug}`}
+                aria-label={article.title}
+              >
+                <span className="latest-cover-number">Nº {article.number}</span>
+                <span className="latest-cover-word">{article.word || article.category}</span>
               </Link>
-              <Link className="article-list-title" href={`${base}/${article.slug}`}>
-                {article.title}
-              </Link>
-              <p className="article-list-excerpt">{article.excerpt}</p>
-              <div className="article-item-meta">
-                <span>{article.date}</span>
-                <span>{article.time}</span>
-              </div>
-              <div className="article-tags" aria-label={locale === "en" ? "Tags" : "Etiquetas"}>
-                {article.tags.map((tag) => (
-                  <Link key={tag} href={`${base}?tag=${encodeURIComponent(tag)}`}>#{tag}</Link>
-                ))}
+              <div className="article-card-body">
+                <Link className="article-list-category" href={`${base}?category=${encodeURIComponent(article.category)}`}>
+                  {article.category}
+                </Link>
+                <Link className="article-list-title" href={`${base}/${article.slug}`}>
+                  {article.title}
+                </Link>
+                <p className="article-list-excerpt">{article.excerpt}</p>
+                <div className="article-item-meta">
+                  <span>{article.date}</span>
+                  <span>{article.time}</span>
+                </div>
+                <div className="article-tags" aria-label={locale === "en" ? "Tags" : "Etiquetas"}>
+                  {article.tags.map((tag) => (
+                    <Link key={tag} href={`${base}?tag=${encodeURIComponent(tag)}`}>#{tag}</Link>
+                  ))}
+                </div>
               </div>
             </li>
           ))}
