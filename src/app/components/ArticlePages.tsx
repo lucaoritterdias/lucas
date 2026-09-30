@@ -1,6 +1,8 @@
 import type { Article } from "../articles";
 import { commentsEnabled } from "../comments";
+import type { ArticleFilterValues } from "./ArticleFilters";
 import { ArticleList } from "./ArticleList";
+import { Breadcrumb } from "./Breadcrumb";
 import { Comments } from "./Comments";
 
 const COPY = {
@@ -22,17 +24,18 @@ const COPY = {
 
 type Locale = keyof typeof COPY;
 
-export function ArticleIndex({ articles, locale, selectedCategory }: { articles: Article[]; locale: Locale; selectedCategory?: string }) {
+export function ArticleIndex({ articles, locale, filters }: { articles: Article[]; locale: Locale; filters: ArticleFilterValues }) {
   const t = COPY[locale];
   return (
     <main className="home article-index">
+      <Breadcrumb locale={locale} items={[{ label: t.index }]} />
       <header className="home-intro">
         <h1>{t.index}</h1>
         <p>{t.introduction}</p>
         <span className="article-index-count">{articles.length} {locale === "en" ? (articles.length === 1 ? "published article" : "published articles") : (articles.length === 1 ? "artigo publicado" : "artigos publicados")}</span>
       </header>
       <section className="home-articles article-list" aria-label={t.index}>
-        <ArticleList articles={articles} base={t.base} locale={locale} selectedCategory={selectedCategory} filters />
+        <ArticleList articles={articles} base={t.base} locale={locale} filterValues={filters} />
       </section>
     </main>
   );
@@ -45,6 +48,15 @@ export function ArticleView({ article, locale }: { article: Article; locale: Loc
     <main className="article-page">
       <article className="article">
         <div className="article-main">
+          <Breadcrumb
+            locale={locale}
+            items={[
+              { label: t.index, href: t.base },
+              { label: article.category, href: `${t.base}?category=${encodeURIComponent(article.category)}` },
+              { label: article.title },
+            ]}
+          />
+
           <header className="article-head">
             <h1 className="article-title">{article.title}</h1>
             <p className="article-lead">{article.excerpt}</p>
@@ -58,6 +70,12 @@ export function ArticleView({ article, locale }: { article: Article; locale: Loc
               ))}
             </div>
           </header>
+
+          {/* same typographic cover as the article cards, at full page width */}
+          <div className="article-cover" aria-hidden>
+            <span className="article-cover-number">Nº {article.number}</span>
+            <span className="article-cover-word">{article.word || article.category}</span>
+          </div>
 
           <div className="prose">
             {article.sections.map(({ id, title, html }) => (

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Newsreader } from "next/font/google";
+import { ContactDialog } from "./components/ContactDialog";
 import { SiteFooter } from "./components/SiteFooter";
 import { SITE_URL } from "./data";
 import { SiteHeader } from "./components/SiteHeader";
@@ -38,6 +39,7 @@ const siteStructuredData = {
       image: `${SITE_URL}/library/lucas-perfil.jpeg`,
       jobTitle: "CTO e engenheiro de software",
       sameAs: [
+        "https://www.linkedin.com/in/lucas-ritter-dias-083631262/",
         "https://github.com/lucaoritterdias",
         "https://www.instagram.com/ritterdiaslucas",
       ],
@@ -109,6 +111,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter year={new Date().getFullYear()} />
+        <ContactDialog />
       </body>
     </html>
   );

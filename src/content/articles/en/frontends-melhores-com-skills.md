@@ -3,7 +3,7 @@ slug: frontends-melhores-com-skills
 category: AI
 tags: [ai, frontend, claude-code, design-system]
 date: 2026-09-14
-word: CONTEXTO
+word: CONTEXT
 title: Better frontends with Claude Code skills
 excerpt: The model knows React, but it does not know your design system. How to use skills, automated visual verification, lint, and hooks so AI-generated interface code comes out matching the product.
 ---

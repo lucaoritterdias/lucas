@@ -1,12 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AboutSection } from "./AboutSection";
+import { HelpSection } from "./HelpSection";
+import { LatestArticles } from "./LatestArticles";
 import { TypedGreeting } from "./TypedGreeting";
 
 const COPY = {
   pt: {
     greeting: "Olá, sou o Lucas.",
     statement: "Empreendedor e engenheiro de software. Construo empresas, produtos e relações duradouras usando tecnologia como ferramenta.",
-    metrics: [{ value: "+7", label: "anos de experiência" }, { value: "+100", label: "projetos entregues" }, { value: "2", label: "países atendidos" }],
+    metrics: [{ value: "+7", label: "anos de experiência" }, { value: "+100", label: "projetos entregues" }, { value: "2", label: "países atendidos" }, { value: "3", label: "idiomas (PT, EN, ES)" }],
     nowEyebrow: "Agora", nowTitle: "Onde estou colocando minha energia",
     nowItems: [
       { action: "Liderando", subject: "Tecnologia e produto na Polvor", href: "https://www.polvor.com" },
@@ -33,7 +36,7 @@ const COPY = {
   en: {
     greeting: "Hello, I'm Lucas.",
     statement: "Entrepreneur and software engineer. I build companies, products, and lasting relationships, using technology as a tool.",
-    metrics: [{ value: "7+", label: "years of experience" }, { value: "100+", label: "projects delivered" }, { value: "2", label: "countries served" }],
+    metrics: [{ value: "7+", label: "years of experience" }, { value: "100+", label: "projects delivered" }, { value: "2", label: "countries served" }, { value: "3", label: "languages (PT, EN, ES)" }],
     nowEyebrow: "Now", nowTitle: "Where I am focusing my energy",
     nowItems: [
       { action: "Leading", subject: "Technology and product at Polvor", href: "https://www.polvor.com" },
@@ -75,11 +78,14 @@ export function HomePage({ locale = "pt" }: { locale?: "pt" | "en" }) {
           <Link className="profile-action profile-action-primary" href={locale === "en" ? "/en/contact" : "/contato"}>
             {locale === "en" ? "Contact" : "Contato"}
           </Link>
-          <Link className="profile-action" href={locale === "en" ? "/en/projects" : "/projetos"}>
-            {locale === "en" ? "Projects" : "Projetos"}
+          <Link className="profile-action" href={locale === "en" ? "/en/portfolio" : "/portfolio"}>
+            {locale === "en" ? "Portfolio" : "Portfólio"}
           </Link>
         </div>
       </div>
     </section>
+    <HelpSection locale={locale} />
+    <AboutSection locale={locale} />
+    <LatestArticles locale={locale} />
   </main>;
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, type FormEvent } from "react";
@@ -9,15 +10,16 @@ import { ThemeToggle } from "./ThemeToggle";
 
 const SEARCH_DOMAIN = "lucasritterdias.com.br";
 
-const ROUTES: [pt: string, en: string][] = [
+export const ROUTES: [pt: string, en: string][] = [
+  ["/sobre", "/en/about"],
   ["/artigos", "/en/articles"],
-  ["/projetos", "/en/projects"],
+  ["/portfolio", "/en/portfolio"],
   ["/contato", "/en/contact"],
 ];
 
-const LABELS = {
-  pt: ["Artigos", "Projetos", "Contato"],
-  en: ["Articles", "Projects", "Contact"],
+export const LABELS = {
+  pt: ["Sobre", "Artigos", "Portfólio", "Contato"],
+  en: ["About", "Articles", "Portfolio", "Contact"],
 };
 
 /** Same page in the other language — every localized route shares its slug. */
@@ -79,6 +81,7 @@ export function SiteHeader() {
   return (
     <header className="site-header" id="top">
       <Link className="wordmark" href={english ? "/en" : "/"}>
+        <Image className="wordmark-avatar" src="/library/lucas-perfil.jpeg" alt="" width={28} height={28} sizes="28px" priority />
         LucasRitterDias.com.br
       </Link>
 

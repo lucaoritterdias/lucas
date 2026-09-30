@@ -3,7 +3,7 @@ slug: software-que-permanece
 category: Product
 tags: [software-engineering, devops, observability]
 date: 2026-08-31
-word: PERMANECER
+word: ENDURE
 title: The best software does not end at delivery
 excerpt: A system only proves its quality in production. Health checks, structured logs, traces, SLOs with error budgets, migrations without maintenance windows, and blameless postmortems.
 ---

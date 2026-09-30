@@ -3,7 +3,7 @@ slug: projetos-ensinam
 category: Business
 tags: [software-engineering, decisions, projects]
 date: 2026-08-17
-word: APRENDER
+word: LEARN
 title: What many projects teach about good decisions
 excerpt: Experience is not intuition, it is a set of techniques that keep recurring. Reversal cost, ADRs, signals in git, vertical slices, and probabilistic estimates.
 ---

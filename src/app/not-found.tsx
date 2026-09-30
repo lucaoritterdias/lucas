@@ -11,7 +11,7 @@ export default function NotFound() {
       <nav className="not-found-links" aria-label="Continuar navegando">
         <Link href="/">Home</Link>
         <Link href="/artigos">Artigos</Link>
-        <Link href="/projetos">Projetos</Link>
+        <Link href="/portfolio">Portfólio</Link>
       </nav>
     </main>
   );

@@ -3,7 +3,7 @@ slug: complexidade-nao-e-valor
 category: Technology
 tags: [software-architecture, simplicity, technology]
 date: 2026-08-24
-word: SIMPLIFICAR
+word: SIMPLIFY
 title: Complexity is not the same as value
 excerpt: Every new piece in a system is a debt with monthly interest. A technical guide to measuring complexity, trading infrastructure for SQL, and giving exceptions an expiry date.
 ---

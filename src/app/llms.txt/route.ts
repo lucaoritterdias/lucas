@@ -22,14 +22,16 @@ O site é em português, com versão em inglês em ${SITE}/en. Lucas começou a 
 ## Páginas
 
 - [Início](${SITE}/): perfil, projetos ativos e artigos recentes
+- [Sobre](${SITE}/sobre): biografia, formação, carreira e empresas
 - [Artigos](${SITE}/artigos): todas as notas pessoais
-- [Contato](${SITE}/contato): WhatsApp, e-mail, GitHub e Instagram
+- [Portfólio](${SITE}/portfolio): negócios e projetos, com a atuação em cada um
+- [Contato](${SITE}/contato): WhatsApp, e-mail, LinkedIn, GitHub e Instagram
 
 ## Artigos
 
 ${articles}
 
-## Projetos
+## Portfólio
 
 - [Polvor](https://www.polvor.com): software house que desenvolve produtos digitais e sistemas sob medida; Lucas é CTO e sócio
 - [Gestor de Agências](https://www.gestordeagencias.com): plataforma de gestão para agências (clientes, projetos, entregas e financeiro); Lucas é cofundador
@@ -37,6 +39,7 @@ ${articles}
 ## Contato
 
 - E-mail: ${PROFILE.email}
+- [LinkedIn](${PROFILE.linkedin})
 - [GitHub](${PROFILE.github})
 - [Instagram](${PROFILE.instagram})
 
