@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { Article } from "../articles";
 import { commentsEnabled } from "../comments";
 import { ArticleList } from "./ArticleList";
@@ -7,12 +6,14 @@ import { Comments } from "./Comments";
 const COPY = {
   pt: {
     index: "Artigos",
+    introduction: "Notas sobre engenharia de software, produto, negócios e as decisões que fazem o trabalho permanecer.",
     base: "/artigos",
     comments: "Discussão",
     commentsNote: "Comente com sua conta do GitHub.",
   },
   en: {
     index: "Articles",
+    introduction: "Notes on software engineering, products, business, and the decisions that make work last.",
     base: "/en/articles",
     comments: "Discussion",
     commentsNote: "Comment with your GitHub account.",
@@ -21,15 +22,17 @@ const COPY = {
 
 type Locale = keyof typeof COPY;
 
-export function ArticleIndex({ articles, locale, selectedTag }: { articles: Article[]; locale: Locale; selectedTag?: string }) {
+export function ArticleIndex({ articles, locale, selectedCategory }: { articles: Article[]; locale: Locale; selectedCategory?: string }) {
   const t = COPY[locale];
   return (
     <main className="home article-index">
       <header className="home-intro">
         <h1>{t.index}</h1>
+        <p>{t.introduction}</p>
+        <span className="article-index-count">{articles.length} {locale === "en" ? (articles.length === 1 ? "published article" : "published articles") : (articles.length === 1 ? "artigo publicado" : "artigos publicados")}</span>
       </header>
       <section className="home-articles article-list" aria-label={t.index}>
-        <ArticleList articles={articles} base={t.base} locale={locale} selectedTag={selectedTag} filters />
+        <ArticleList articles={articles} base={t.base} locale={locale} selectedCategory={selectedCategory} filters />
       </section>
     </main>
   );
@@ -51,9 +54,7 @@ export function ArticleView({ article, locale }: { article: Article; locale: Loc
             </div>
             <div className="article-tags article-view-tags" aria-label={locale === "en" ? "Tags" : "Etiquetas"}>
               {article.tags.map((tag) => (
-                <Link key={tag} href={`${t.base}?tag=${encodeURIComponent(tag)}`}>
-                  #{tag}
-                </Link>
+                <span key={tag}>#{tag}</span>
               ))}
             </div>
           </header>

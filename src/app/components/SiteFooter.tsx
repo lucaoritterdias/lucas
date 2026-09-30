@@ -5,6 +5,9 @@ import { usePathname } from "next/navigation";
 export function SiteFooter({ year }: { year: number }) {
   const pathname = usePathname();
   const english = pathname === "/en" || pathname.startsWith("/en/");
+
+  if (pathname === "/" || pathname === "/en") return null;
+
   return (
     <footer className="site-footer">
       <p className="footer-note">© {year} Lucas Ritter Dias</p>
