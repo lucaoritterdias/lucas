@@ -1,6 +1,7 @@
 /** Shared by the contact dialog (client) and /api/contact (server). */
 
 export const INTERESTS = {
+  product: { pt: "Tirar um produto do papel", en: "Getting a product off the ground" },
   project: { pt: "Projeto digital com a Polvor", en: "Digital project with Polvor" },
   cto: { pt: "CTO sob demanda", en: "Fractional CTO" },
   audit: { pt: "Diagnóstico técnico", en: "Technical assessment" },

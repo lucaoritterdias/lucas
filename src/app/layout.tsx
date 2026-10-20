@@ -1,9 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Newsreader } from "next/font/google";
-import { ContactDialog } from "./components/ContactDialog";
-import { SiteFooter } from "./components/SiteFooter";
+import { Geist, Geist_Mono } from "next/font/google";
 import { SITE_URL } from "./data";
-import { SiteHeader } from "./components/SiteHeader";
 import { StructuredData } from "./components/StructuredData";
 import { themeBootScript } from "./theme-boot";
 import "./globals.css";
@@ -20,14 +17,6 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  style: ["normal", "italic"],
-  axes: ["opsz"],
-  variable: "--font-newsreader",
-  display: "swap",
-});
-
 const siteStructuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -37,7 +26,7 @@ const siteStructuredData = {
       name: "Lucas Ritter Dias",
       url: SITE_URL,
       image: `${SITE_URL}/library/lucas-perfil.jpeg`,
-      jobTitle: "CTO e engenheiro de software",
+      jobTitle: "Product Engineer e CTO",
       sameAs: [
         "https://www.linkedin.com/in/lucas-ritter-dias-083631262/",
         "https://github.com/lucaoritterdias",
@@ -64,21 +53,13 @@ const siteStructuredData = {
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: "Lucas Ritter Dias · Engenheiro de software e CTO",
+  title: "Lucas Ritter Dias · Product Engineer",
   description:
-    "Lucas Ritter Dias é engenheiro de software, CTO e sócio da Polvor. Desenvolve produtos digitais desde os 14 anos.",
-  alternates: {
-    types: {
-      "application/rss+xml": [
-        { url: "/feed.xml", title: "Artigos · Lucas Ritter Dias" },
-        { url: "/en/feed.xml", title: "Articles · Lucas Ritter Dias" },
-      ],
-    },
-  },
+    "Lucas Ritter Dias é product engineer, CTO e sócio da Polvor: pensa o negócio, desenha o produto e constrói o software.",
+  alternates: { canonical: "/", languages: { "pt-BR": "/", en: "/en" } },
   openGraph: {
-    title: "Lucas Ritter Dias · Engenheiro de software e CTO",
-    description:
-      "Mais de uma década transformando desafios reais de negócio em produtos digitais.",
+    title: "Lucas Ritter Dias · Product Engineer",
+    description: "Pensa o negócio, desenha o produto e constrói o software, do problema ao resultado.",
     url: SITE_URL,
     siteName: "Lucas Ritter Dias",
     locale: "pt_BR",
@@ -88,8 +69,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#0c0c0c" },
+    { media: "(prefers-color-scheme: light)", color: "#e9e3d7" },
+    { media: "(prefers-color-scheme: dark)", color: "#241c16" },
   ],
 };
 
@@ -99,7 +80,7 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${geist.variable} ${geistMono.variable} ${newsreader.variable}`}
+      className={`${geist.variable} ${geistMono.variable}`}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
@@ -108,10 +89,7 @@ export default function RootLayout({
       </head>
       <body>
         <StructuredData data={siteStructuredData} />
-        <SiteHeader />
         {children}
-        <SiteFooter year={new Date().getFullYear()} />
-        <ContactDialog />
       </body>
     </html>
   );

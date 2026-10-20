@@ -7,46 +7,52 @@ import { PROFILE } from "../data";
 
 const COPY = {
   pt: {
-    title: "Vamos conversar",
-    intro: "Conte um pouco sobre o que você precisa. Respondo pelo e-mail que você informar.",
-    name: "Nome",
-    email: "E-mail",
-    phone: "Telefone",
-    optional: "opcional",
-    interest: "Interesse",
-    message: "Mensagem",
-    messagePlaceholder: "Contexto, prazo, o que já existe…",
-    send: "Enviar mensagem",
-    sending: "Enviando…",
+    title: "Querido Lucas,",
+    name: "Meu nome é",
+    namePlaceholder: "seu nome",
+    email: "e você me encontra em",
+    emailPlaceholder: "seu@email.com",
+    phone: "ou no telefone",
+    phonePlaceholder: "(00) 00000-0000",
+    phoneAfter: ", se preferir.",
+    interest: "Queria conversar sobre",
+    message: "O que você tem em mente",
+    messagePlaceholder: "Conte o contexto, o prazo, o que já existe…",
+    sign: "Um abraço!",
+    send: "Enviar carta",
+    sending: "Dobrando a carta…",
     close: "Fechar",
-    sentTitle: "Mensagem enviada",
-    sentText: "Obrigado! Recebi sua mensagem e respondo em breve no seu e-mail.",
+    sentTitle: "Carta enviada!",
+    sentText: "Já está voando até mim. Respondo no seu e-mail em breve.",
     errors: {
-      invalid: "Confira os campos: nome, um e-mail válido e a mensagem são obrigatórios.",
-      rate_limited: "Muitas mensagens em pouco tempo. Tente de novo em alguns minutos.",
-      generic: "Não consegui enviar agora.",
+      invalid: "Faltou algo: seu nome, um e-mail válido e a mensagem.",
+      rate_limited: "Muitas cartas em pouco tempo. Tente de novo daqui a alguns minutos.",
+      generic: "O correio falhou agora.",
     },
     fallback: "Se preferir, fale direto:",
   },
   en: {
-    title: "Let's talk",
-    intro: "Tell me a bit about what you need. I'll reply to the email you provide.",
-    name: "Name",
-    email: "Email",
-    phone: "Phone",
-    optional: "optional",
-    interest: "Interest",
-    message: "Message",
+    title: "Dear Lucas,",
+    name: "My name is",
+    namePlaceholder: "your name",
+    email: "and you can reach me at",
+    emailPlaceholder: "you@email.com",
+    phone: "or by phone at",
+    phonePlaceholder: "+00 000 000 000",
+    phoneAfter: ", if you prefer.",
+    interest: "I'd like to talk about",
+    message: "What you have in mind",
     messagePlaceholder: "Context, timeline, what already exists…",
-    send: "Send message",
-    sending: "Sending…",
+    sign: "Best,",
+    send: "Send the letter",
+    sending: "Folding the letter…",
     close: "Close",
-    sentTitle: "Message sent",
-    sentText: "Thank you! I got your message and will reply to your email soon.",
+    sentTitle: "Letter sent!",
+    sentText: "It's already flying my way. I'll reply to your email soon.",
     errors: {
-      invalid: "Please check the fields: name, a valid email and the message are required.",
-      rate_limited: "Too many messages in a short time. Please try again in a few minutes.",
-      generic: "I couldn't send it right now.",
+      invalid: "Something's missing: your name, a valid email and the message.",
+      rate_limited: "Too many letters in a short time. Please try again in a few minutes.",
+      generic: "The mail failed right now.",
     },
     fallback: "If you prefer, reach me directly:",
   },
@@ -54,7 +60,10 @@ const COPY = {
 
 type Status = "idle" | "sending" | "sent" | "error";
 
-/** Opens the contact dialog from anywhere; the link still works as a plain link without JavaScript. */
+/** "Tirar um produto…" reads as "tirar um produto…" mid-sentence; acronyms like "CTO" stay as they are. */
+const midSentence = (label: string) => (/^[A-ZÀ-Ý][a-zà-ÿ]/.test(label) ? label[0].toLowerCase() + label.slice(1) : label);
+
+/** Opens the letter from anywhere; without JavaScript it is a plain link. */
 export function ContactTrigger({
   interest,
   href,
@@ -80,13 +89,14 @@ export function ContactTrigger({
   );
 }
 
+/** The contact form, written as a letter that slides out of the envelope. */
 export function ContactDialog() {
   const pathname = usePathname();
   const locale = pathname === "/en" || pathname.startsWith("/en/") ? "en" : "pt";
   const t = COPY[locale];
   const dialog = useRef<HTMLDialogElement>(null);
   const openedAt = useRef(0);
-  const [interest, setInterest] = useState<Interest>("project");
+  const [interest, setInterest] = useState<Interest>("product");
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
 
@@ -149,65 +159,72 @@ export function ContactDialog() {
   };
 
   return (
-    <dialog ref={dialog} className="contact-dialog" aria-labelledby="contact-dialog-title" onClick={onDialogClick}>
-      <div className="contact-dialog-panel">
-        <button type="button" className="contact-dialog-close" onClick={close} aria-label={t.close}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" aria-hidden>
-            <path d="M6 6l12 12M18 6 6 18" />
-          </svg>
+    <dialog ref={dialog} className="letter-dialog" aria-labelledby="letter-title" onClick={onDialogClick}>
+      <div className="letter" data-state={status}>
+        <span className="letter-stamp" aria-hidden>
+          <span>LRD</span>
+        </span>
+        <span className="letter-postmark" aria-hidden>
+          {new Date().getFullYear()}
+        </span>
+        <button type="button" className="letter-close" onClick={close}>
+          {t.close} <span aria-hidden>✕</span>
         </button>
 
         {status === "sent" ? (
-          <div className="contact-dialog-sent" role="status">
-            <span className="contact-dialog-check" aria-hidden>
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
-                <path d="m5 12.5 4.5 4.5L19 7.5" />
-              </svg>
-            </span>
-            <h2 id="contact-dialog-title">{t.sentTitle}</h2>
+          <div className="letter-sent" role="status">
+            <svg className="letter-plane" viewBox="0 0 48 32" aria-hidden>
+              <path d="M2 16 L46 2 L30 30 L22 19 Z" fill="#fffdf8" />
+              <path d="M46 2 L22 19 L18 28 L16 18 Z" fill="#e6e0d3" />
+              <path d="M2 16 L46 2 L30 30 L22 19 Z M46 2 L22 19" fill="none" stroke="#23201b" strokeWidth="1.2" strokeLinejoin="round" />
+            </svg>
+            <h2 id="letter-title">{t.sentTitle}</h2>
             <p>{t.sentText}</p>
-            <button type="button" className="contact-dialog-submit" onClick={close}>{t.close}</button>
+            <button type="button" className="letter-send" onClick={close}>
+              {t.close}
+            </button>
           </div>
         ) : (
-          <form className="contact-dialog-form" onSubmit={submit} noValidate={false}>
-            <h2 id="contact-dialog-title">{t.title}</h2>
-            <p className="contact-dialog-intro">{t.intro}</p>
+          <form className="letter-form" onSubmit={submit}>
+            <h2 id="letter-title">{t.title}</h2>
 
-            <div className="contact-dialog-row">
+            <p className="letter-line">
               <label>
-                <span>{t.name}</span>
-                <input name="name" autoComplete="name" required maxLength={LIMITS.name} />
-              </label>
+                {t.name}{" "}
+                <input name="name" autoComplete="name" required maxLength={LIMITS.name} placeholder={t.namePlaceholder} size={18} />
+              </label>{" "}
               <label>
-                <span>{t.email}</span>
-                <input name="email" type="email" autoComplete="email" required maxLength={LIMITS.email} />
+                {t.email}{" "}
+                <input name="email" type="email" autoComplete="email" required maxLength={LIMITS.email} placeholder={t.emailPlaceholder} size={22} />
+              </label>{" "}
+              <label>
+                {t.phone}{" "}
+                <input name="phone" type="tel" autoComplete="tel" maxLength={LIMITS.phone} placeholder={t.phonePlaceholder} size={15} />
               </label>
-            </div>
+              {t.phoneAfter}
+            </p>
 
-            <div className="contact-dialog-row">
+            <p className="letter-line">
               <label>
-                <span>
-                  {t.phone} <small>({t.optional})</small>
-                </span>
-                <input name="phone" type="tel" autoComplete="tel" maxLength={LIMITS.phone} />
-              </label>
-              <label>
-                <span>{t.interest}</span>
+                {t.interest}{" "}
                 <select name="interest" value={interest} onChange={(event) => setInterest(event.target.value as Interest)} required>
                   {INTEREST_KEYS.map((key) => (
-                    <option key={key} value={key}>{INTERESTS[key][locale]}</option>
+                    <option key={key} value={key}>
+                      {midSentence(INTERESTS[key][locale])}
+                    </option>
                   ))}
                 </select>
               </label>
-            </div>
+              .
+            </p>
 
-            <label>
-              <span>{t.message}</span>
-              <textarea name="message" rows={4} required maxLength={LIMITS.message} placeholder={t.messagePlaceholder} />
+            <label className="letter-message">
+              <span className="sr-only">{t.message}</span>
+              <textarea name="message" rows={5} required maxLength={LIMITS.message} placeholder={t.messagePlaceholder} />
             </label>
 
             {/* honeypot: hidden from people, often filled in by bots */}
-            <div className="contact-dialog-trap" aria-hidden>
+            <div className="letter-trap" aria-hidden>
               <label>
                 Website
                 <input name="website" tabIndex={-1} autoComplete="off" />
@@ -215,15 +232,22 @@ export function ContactDialog() {
             </div>
 
             {status === "error" && (
-              <p className="contact-dialog-error" role="alert">
-                {error} {t.fallback}{" "}
-                <a href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a> · <a href={PROFILE.whatsapp} target="_blank" rel="noreferrer">WhatsApp</a>
+              <p className="letter-error" role="alert">
+                {error} {t.fallback} <a href={`mailto:${PROFILE.email}`}>{PROFILE.email}</a> ·{" "}
+                <a href={PROFILE.whatsapp} target="_blank" rel="noreferrer">
+                  WhatsApp
+                </a>
               </p>
             )}
 
-            <button type="submit" className="contact-dialog-submit" disabled={status === "sending"}>
-              {status === "sending" ? t.sending : t.send}
-            </button>
+            <div className="letter-foot">
+              <p className="letter-sign" aria-hidden>
+                {t.sign}
+              </p>
+              <button type="submit" className="letter-send" disabled={status === "sending"}>
+                {status === "sending" ? t.sending : t.send} <span aria-hidden>✈</span>
+              </button>
+            </div>
           </form>
         )}
       </div>
